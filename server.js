@@ -24,15 +24,24 @@ function uniqueid() {
 }
 
 io.sockets.on('connection', function(socket) {
-    
+    var id = uniqueid();
     socket.emit('welcome', {
-        snapshot : Game.makeSnap(testPlayer,testSnap),
-        id : uniqueid()
+        snapshot : Game.makeSnap(id, testSnap),
+        id : id
     });
     socket.on('keypress', function(data) {
         Game.handleKey(data);
+        io.sockets.emit('update');
+    });
+    socket.on('changeid', function(data) {
+        id = data.newid;
         socket.emit('snap', {
-            snapshot : Game.makeSnap(testPlayer,testSnap)
+            snapshot : Game.makeSnap(id, testSnap)
+        });
+    });
+    socket.on('re:update', function(){
+        socket.emit('snap', {
+            snapshot : Game.makeSnap(id, testSnap)
         });
     });
 });

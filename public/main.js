@@ -17,6 +17,10 @@ socket.on('snap', function(data) {
     currentsnap = data;
 });
 
+socket.on('update', function() {
+    socket.emit('re:update');
+});
+
 
 window.addEventListener("keydown", dealWithKeyboard, false);
  

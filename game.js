@@ -183,12 +183,20 @@ Game.makeSnap = function(player, level) {
         groundLayer : [],
         objects : []
     };
+    if (Game.checkPlayer(playerList, player)) {
+        var player = Game.checkPlayer(playerList, player);
+    } else {
+        return {
+            groundLayer : [[nullTile]],
+            objects : []
+        };
+    }
     var oy = 0;
     var ox = 0;
-    for (var y = player.y - 6; y < player.y + 5; y++) {
+    for (var y = player.y - 5; y < player.y + 6; y++) {
         newSnap.groundLayer.push([]);
 
-        for (var x = player.x - 4; x < player.x + 7; x++) {
+        for (var x = player.x - 5; x < player.x + 6; x++) {
 
             if (Game.doesTileExist(x, y, level.groundLayer)) {
                 newSnap.groundLayer[oy].push(level.groundLayer[y][x]);
