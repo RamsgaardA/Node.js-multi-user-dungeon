@@ -1,6 +1,8 @@
 var express = require("express");
 var app = express();
 var game = require('./game.js');
+var game = require('./content.js');
+
 
 /* serves main page */
 app.use(express['static'](__dirname + '/public'));
@@ -27,10 +29,10 @@ io.sockets.on('connection', function(socket) {
     var id = uniqueid();
     var newPlayer = new Game.Player('#' + (Math.random() * 0xFFFFFF << 0).toString(16), id, 15, 15);
     playerList.push(newPlayer);
-    testSnap.objects.push(newPlayer);
+    testLevel1.objects.push(newPlayer);
 
     socket.emit('welcome', {
-        snapshot : Game.makeSnap(id, testSnap),
+        snapshot : Game.makeSnap(id),
         id : id
     });
     socket.on('keypress', function(data) {
@@ -40,12 +42,12 @@ io.sockets.on('connection', function(socket) {
     socket.on('changeid', function(data) {
         id = data.newid;
         socket.emit('snap', {
-            snapshot : Game.makeSnap(id, testSnap)
+            snapshot : Game.makeSnap(id)
         });
     });
     socket.on('re:update', function() {
         socket.emit('snap', {
-            snapshot : Game.makeSnap(id, testSnap)
+            snapshot : Game.makeSnap(id)
         });
     });
 });
