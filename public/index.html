@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Node.js MUD</title>
+	</head>
+	<body>
+
+		<canvas id="Canvas" height="400" width="400">
+			Canvas
+		</canvas>
+		<div id="session"></div>
+		<br>
+		<input type="text" id="sessioninput">
+		<input type="submit" value="Restore session" onclick="
+		Client.owner = document.getElementById('sessioninput').value;
+		document.getElementById('session').innerHTML = 'Session ID:'  + Client.owner;
+		">
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="main.js"></script>
+		<script src="render.js"></script>
+
+	</body>
+</html>
