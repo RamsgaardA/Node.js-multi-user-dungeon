@@ -1,5 +1,5 @@
-Game = {};
 
+Game = {};
 Game.Tiles = {};
 Game.Objects = {};
 
@@ -38,9 +38,9 @@ Game.Player = function(color, owner, x, y) {
     this.y = y;
 };
 
-var testTile = new Game.Tile(true, "_", "Black");
-var centerTile = new Game.Tile(true, "X", "Green");
-var nullTile = new Game.Tile(false, "?", "White");
+Game.Tiles.testTile = new Game.Tile(true, "_", "Black");
+Game.Tiles.centerTile = new Game.Tile(true, "X", "Green");
+Game.Tiles.nullTile = new Game.Tile(false, "?", "White");
 testPlayer = new Game.Player("#0000ff", "anders", 15, 15);
 var testPlayer2 = new Game.Player("Red", "testuser", 4, 6);
 
@@ -56,15 +56,15 @@ testSnap = {
     objects : [testPlayer, testObject, testPlayer2]
 };
 
-var playerList = [testPlayer, testPlayer2];
+playerList = [testPlayer, testPlayer2];
 
 for (var i = 0; i < 30; i++) {
     testSnap.groundLayer.push([]);
     for (var x = 0; x < 30; x++) {
         if (i == 15 && x == 15) {
-            testSnap.groundLayer[i].push(centerTile);
+            testSnap.groundLayer[i].push(Game.Tiles.centerTile);
         } else {
-            testSnap.groundLayer[i].push(testTile);
+            testSnap.groundLayer[i].push(Game.Tiles.testTile);
         }
 
     }
@@ -178,6 +178,8 @@ Game.handleKey = function(data) {
 
 };
 
+
+
 Game.makeSnap = function(player, level) {
     var newSnap = {
         groundLayer : [],
@@ -187,7 +189,7 @@ Game.makeSnap = function(player, level) {
         var player = Game.checkPlayer(playerList, player);
     } else {
         return {
-            groundLayer : [[nullTile]],
+            groundLayer : [[Game.Tiles.nullTile]],
             objects : []
         };
     }
@@ -207,9 +209,10 @@ Game.makeSnap = function(player, level) {
             if (Game.checkObjects(x, y, level.objects)) {
                 var processedObject = JSON.parse(JSON.stringify(Game.checkObjects(x, y, level.objects)));
                 processedObject.x = ox;
-                processedObject.globalx = x;
-                processedObject.globaly = y;
                 processedObject.y = oy;
+                if(processedObject.type === "Player"){
+                    processedObject.owner = "";
+                }
                 newSnap.objects.push(processedObject);
             }
             ox++;
@@ -220,4 +223,3 @@ Game.makeSnap = function(player, level) {
     }
     return newSnap;
 };
-

@@ -14,7 +14,7 @@
 		<input type="text" id="sessioninput">
 		<input type="submit" value="Restore session" onclick="
 		Client.owner = document.getElementById('sessioninput').value;
-		document.getElementById('session').innerHTML = 'Session ID:'  + Client.owner;
+		document.getElementById('session').innerHTML = 'Session ID: '  + Client.owner;
 		socket.emit('changeid', {
 		newid : Client.owner
 		});

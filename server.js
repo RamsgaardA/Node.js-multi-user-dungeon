@@ -25,6 +25,10 @@ function uniqueid() {
 
 io.sockets.on('connection', function(socket) {
     var id = uniqueid();
+    var newPlayer = new Game.Player('#' + (Math.random() * 0xFFFFFF << 0).toString(16), id, 15, 15);
+    playerList.push(newPlayer);
+    testSnap.objects.push(newPlayer);
+
     socket.emit('welcome', {
         snapshot : Game.makeSnap(id, testSnap),
         id : id
@@ -39,7 +43,7 @@ io.sockets.on('connection', function(socket) {
             snapshot : Game.makeSnap(id, testSnap)
         });
     });
-    socket.on('re:update', function(){
+    socket.on('re:update', function() {
         socket.emit('snap', {
             snapshot : Game.makeSnap(id, testSnap)
         });
