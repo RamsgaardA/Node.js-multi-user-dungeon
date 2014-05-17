@@ -30,24 +30,7 @@ Game.Player = function(color, owner, x, y) {
 		attack : 4,
 	};
 	this.func = function(inp) {
-		if (inp == 88) {
-			if(Game.getPlayerIndexSafely(this.name, Game.findLevel(this.level, levels))){
-				Game.findLevel(this.level, levels).objects.splice(Game.getPlayerIndexSafely(this.name, Game.findLevel(this.level, levels)), 0);
-				
-			}
-			
-			this.level = "testLevel2";
-			Game.findLevel(this.level, levels).objects.push(this);
-		}
-		if (inp == 90) {
-			if(Game.getPlayerIndexSafely(this.name, Game.findLevel(this.level, levels))){
-				Game.findLevel(this.level, levels).objects.splice(Game.getPlayerIndexSafely(this.name, Game.findLevel(this.level, levels)), 0);
-				
-			}
-			
-			this.level = "testLevel1";
-			Game.findLevel(this.level, levels).objects.push(this);
-		}
+
 	};
 	this.owner = owner;
 	this.x = x;
@@ -73,21 +56,33 @@ Game.move = function(direction, player) {
 		if (playerList[i].owner == player) {
 			switch(direction) {
 				case "l":
+					if (Game.checkObjects(playerList[i].x - 1, playerList[i].y, level.objects)) {
+						Game.checkObjects(playerList[i].x - 1, playerList[i].y, level.objects).func(actualPlayer);
+					}
 					if (Game.checktile(playerList[i].x - 1, playerList[i].y, level)) {
 						playerList[i].x--;
 					}
 					break;
 				case "u":
+					if (Game.checkObjects(playerList[i].x, playerList[i].y - 1, level.objects)) {
+						Game.checkObjects(playerList[i].x, playerList[i].y - 1, level.objects).func(actualPlayer);
+					}
 					if (Game.checktile(playerList[i].x, playerList[i].y - 1, level)) {
 						playerList[i].y--;
 					}
 					break;
 				case "r":
+					if (Game.checkObjects(playerList[i].x + 1, playerList[i].y, level.objects)) {
+						Game.checkObjects(playerList[i].x + 1, playerList[i].y, level.objects).func(actualPlayer);
+					}
 					if (Game.checktile(playerList[i].x + 1, playerList[i].y, level)) {
 						playerList[i].x++;
 					}
 					break;
 				case "d":
+					if (Game.checkObjects(playerList[i].x, playerList[i].y + 1, level.objects)) {
+						Game.checkObjects(playerList[i].x, playerList[i].y + 1, level.objects).func(actualPlayer);
+					}
 					if (Game.checktile(playerList[i].x, playerList[i].y + 1, level)) {
 						playerList[i].y++;
 					}
