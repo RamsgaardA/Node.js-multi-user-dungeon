@@ -19,6 +19,31 @@ Game.GameObject = function(type, symbol, color, isWalkable, contents, func, x, y
 	this.y = y;
 };
 
+Game.Weapon = function(name, weight, piercing, slashing, bludgeoning){
+	this.type = "Weapon";
+	this.name = name;
+	this.piercing = piercing;
+	this.slashing = slashing;
+	this.bludgeoning = bludgeoning;
+	this.weight = weight;
+	
+};
+
+Game.Armor = function(name, weight, layer, piercing, slashing, bludgeoning){
+	this.type = "Armor";
+	this.name = name;
+	this.piercing = piercing;
+	this.slashing = slashing;
+	this.bludgeoning = bludgeoning;
+	this.weight = weight;
+	this.layer = layer;
+	
+};
+
+var stick = new Game.Weapon("Stick", 2, 1, 1, 1);
+var loinCloth = new Game.Armor("Loin Cloth", 2, 0, 1, 1, 1);
+
+
 Game.Stairs = function(symbol, color, leadsto, x, y) {
 	this.type = "Stairs";
 	this.symbol = symbol;
@@ -48,9 +73,13 @@ Game.Player = function(color, owner, x, y) {
 	this.color = color;
 	this.isWalkable = false;
 	this.contents = {
-		health : 100,
-		maxhealth : 100,
-		attack : 4,
+		str : 4,
+		agi : 4,
+		con : 4,
+		hp : 100,
+		mhp : 100,
+		weapon : [stick],
+		armor : [loinCloth]
 	};
 	this.func = function(inp) {
 
