@@ -1,6 +1,6 @@
 var express = require("express");
 var app = express();
-var gameclasses = require('./GameClasses.js');
+var gameclasses = require('./gameglasses.js');
 var game = require('./game.js');
 var gamecontent = require('./content.js');
 
