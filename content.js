@@ -16,28 +16,9 @@ var testObject2 = new Game.GameObject("dummy", "h", "Red", false, {
 }, function() {
 }, 20, 12);
 
-var lvl1stairs = new Game.GameObject("Stairs", "<", "Green", true, {}, function(actor) {
+var lvl1stairs = new Game.Stairs("<", "Green", "testLevel2", 24, 10);
 
-	if (Game.getPlayerIndexSafely(actor.name, Game.findLevel(actor.level, levels))) {
-		Game.findLevel(actor.level, levels).objects.splice(Game.getPlayerIndexSafely(actor.name, Game.findLevel(actor.level, levels)), 0);
-
-	}
-
-	actor.level = "testLevel2";
-	Game.findLevel(actor.level, levels).objects.push(actor);
-
-},24, 10);
-var lvl2stairs = new Game.GameObject("Stairs", "<", "Green", true, {}, function(actor) {
-
-	if (Game.getPlayerIndexSafely(actor.name, Game.findLevel(actor.level, levels))) {
-		Game.findLevel(actor.level, levels).objects.splice(Game.getPlayerIndexSafely(actor.name, Game.findLevel(actor.level, levels)), 0);
-
-	}
-
-	actor.level = "testLevel1";
-	Game.findLevel(actor.level, levels).objects.push(actor);
-
-},24, 10);
+var lvl2stairs = new Game.Stairs(">", "Green", "testLevel1", 24, 10);
 
 
 testLevel1 = {
