@@ -9,7 +9,13 @@
 		<canvas id="Canvas" height="400" width="400">
 			Canvas
 		</canvas>
-		<div id="session"></div>
+		<br>
+		<input type="submit" value="Start New Game" onclick="
+		socket.emit('StartGame');
+		"><br>
+		<div id="session">
+			Session ID: *None, start a game or restore a session*
+		</div>
 		<br>
 		<input type="text" id="sessioninput">
 		<input type="submit" value="Restore session" onclick="
