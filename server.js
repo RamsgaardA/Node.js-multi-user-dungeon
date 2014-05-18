@@ -13,6 +13,20 @@ app.get("/", function(req, res) {
 var port = 3700;
 var io = require('socket.io').listen(app.listen(port));
 
+var chatMessages = [];
+
+function updateChat(msg) {
+	
+	if (chatMessages.length < 10) {
+		chatMessages.push(msg);
+		return chatMessages;
+	} else {
+		chatMessages.shift();
+		chatMessages.push(msg);
+		return chatMessages;
+	}
+}
+
 function uniqueid() {
 	var idstr = String.fromCharCode(Math.floor((Math.random() * 25) + 65));
 	do {
@@ -27,7 +41,7 @@ function uniqueid() {
 
 io.sockets.on('connection', function(socket) {
 	var id = "";
-	
+
 	socket.on('StartGame', function() {
 		id = uniqueid();
 		var newPlayer = new Game.Player('#' + (Math.random() * 0xFFFFFF << 0).toString(16), id, 15, 15);
@@ -38,7 +52,12 @@ io.sockets.on('connection', function(socket) {
 			id : id
 		});
 	});
+	socket.on('chat', function(data) {
+		io.sockets.emit('chatupdate', {
+			chatmessages : updateChat(data.chatMessage)
+		});
 
+	});
 	socket.on('keypress', function(data) {
 		Game.handleKey(data);
 		io.sockets.emit('update');

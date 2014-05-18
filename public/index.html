@@ -3,19 +3,27 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Node.js MUD</title>
+		<style>
+			#chatbox {
+				position: absolute;
+				left: 500px;
+			}
+		</style>
 	</head>
 	<body>
-
+		<div id="chatbox">Chat Messages:</div>
 		<canvas id="Canvas" height="400" width="400">
 			Canvas
 		</canvas>
 		<br>
 		<input type="submit" value="Start New Game" onclick="
 		socket.emit('StartGame');
-		"><br>
+		">
+		<br>
 		<div id="session">
 			Session ID: *None, start a game or restore a session*
 		</div>
+		
 		<br>
 		<input type="text" id="sessioninput">
 		<input type="submit" value="Restore session" onclick="
@@ -23,6 +31,13 @@
 		document.getElementById('session').innerHTML = 'Session ID: '  + Client.owner;
 		socket.emit('changeid', {
 		newid : Client.owner
+		});
+		">
+		<br>
+		<input type="text" id="chatinput">
+		<input type="submit" value="Chat" onclick="
+		socket.emit('chat', {
+		chatMessage : document.getElementById('chatinput').value
 		});
 		">
 		<script src="/socket.io/socket.io.js"></script>
