@@ -8,12 +8,12 @@ socket.on('welcome', function(data) {
     Client.Render(data.snapshot);
     document.getElementById("session").innerHTML = "Session ID: " + data.id;
     Client.owner = data.id;
-    console.log(data);
+    //console.log(data);
 });
 
 socket.on('snap', function(data) {
     Client.Render(data.snapshot);
-    console.log(data);
+    //console.log(data);
     currentsnap = data;
 });
 
@@ -22,7 +22,7 @@ socket.on('update', function() {
 });
 
 socket.on('chatupdate', function(data){
-	console.log(data);
+	//console.log(data);
 	var chatstrout = "Chat messages: <br>";
 	for(var i = 0; i < data.chatmessages.length; i++){
 		chatstrout+= data.chatmessages[i] + "<br>";
