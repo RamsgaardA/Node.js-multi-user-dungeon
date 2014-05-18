@@ -16,15 +16,24 @@ var testObject2 = new Game.GameObject("dummy", "h", "Red", false, {
 }, function() {
 }, 20, 12);
 
+var lvl0stairs = new Game.Stairs("<", "Brown", "testLevel1", 14, 12);
+
 var lvl1stairs = new Game.Stairs("<", "Green", "testLevel2", 24, 10);
+
+var lvl1stairs2 = new Game.Stairs(">", "Brown", "testLevel0", 14, 12);
 
 var lvl2stairs = new Game.Stairs(">", "Green", "testLevel1", 24, 10);
 
+testLevel0 = {
+	name : "testLevel0",
+	groundLayer : [],
+	objects : [lvl0stairs]
+};
 
 testLevel1 = {
 	name : "testLevel1",
 	groundLayer : [],
-	objects : [testObject, lvl1stairs]
+	objects : [testObject, lvl1stairs, lvl1stairs2]
 };
 
 testLevel2 = {
@@ -33,7 +42,7 @@ testLevel2 = {
 	objects : [lvl2stairs, testObject2]
 };
 
-var testPlayer = new Game.Player("#0000ff", "anders", 15, 15);
+var testPlayer = new Game.Player("#0000ff", "anders", 13, 17);
 var testPlayer2 = new Game.Player("Red", "testuser", 4, 6);
 testPlayer2.level = "testLevel2";
 
@@ -43,27 +52,21 @@ testLevel2.objects.push(testPlayer2);
 playerList = [testPlayer, testPlayer2];
 
 for (var i = 0; i < 30; i++) {
+	testLevel0.groundLayer.push([]);
 	testLevel1.groundLayer.push([]);
-	for (var x = 0; x < 30; x++) {
-		if (i == 15 && x == 15) {
-			testLevel1.groundLayer[i].push(Game.Tiles.centerTile);
-		} else {
-			testLevel1.groundLayer[i].push(Game.Tiles.testTile);
-		}
-
-	}
-}
-
-for (var i = 0; i < 30; i++) {
 	testLevel2.groundLayer.push([]);
 	for (var x = 0; x < 30; x++) {
 		if (i == 15 && x == 15) {
+			testLevel0.groundLayer[i].push(Game.Tiles.centerTile);
+			testLevel1.groundLayer[i].push(Game.Tiles.centerTile);
 			testLevel2.groundLayer[i].push(Game.Tiles.centerTile);
 		} else {
+			testLevel0.groundLayer[i].push(Game.Tiles.testTile);
+			testLevel1.groundLayer[i].push(Game.Tiles.testTile);
 			testLevel2.groundLayer[i].push(Game.Tiles.testTile);
 		}
 
 	}
 }
 
-levels = [testLevel1, testLevel2];
+levels = [testLevel0, testLevel1, testLevel2];
