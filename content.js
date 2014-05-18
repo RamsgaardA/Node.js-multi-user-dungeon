@@ -28,11 +28,13 @@ var testCreature = new Game.GameObject("Creature", "j", "Red", false, {
 }, function(actor) {
 
     this.contents.hp -= actor.contents.str * actor.contents.weapon[0].piercing * (Math.random() * 10 + actor.contents.agi);
+    
     actor.contents.hp -= this.contents.str * this.contents.sdam * (Math.random() * 10 + this.contents.agi);
+    actor.appendMessage("You hurt the creature");
     if (this.contents.hp < 0) {
         console.log("hp < 0");
         Game.findLevel(this.level, levels).objects.splice(Game.findObjectIndex(this, Game.findLevel(this.level, levels).objects), 1);
-
+		actor.appendMessage("You slay the creature");
     }
 
 }, 5, 16, "testLevel0");
