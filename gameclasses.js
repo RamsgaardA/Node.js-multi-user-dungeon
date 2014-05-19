@@ -59,6 +59,7 @@ Game.Stairs = function(symbol, color, leadsto, x, y, level) {
 		actor.level = leadsto;
 		if (Game.findLevel(actor.level, levels)) {
 			Game.findLevel(actor.level, levels).objects.push(actor);
+			console.log("Player: " + actor.owner + " has entered: " + actor.level);
 		} else {
 			console.log("Error, level does not exist");
 		}
@@ -83,7 +84,7 @@ Game.Player = function(color, owner, x, y) {
 		armor : [loinCloth]
 	};
 	this.func = function(inp) {
-
+		this.appendMessage(JSON.stringify(this.contents));
 	};
 	this.owner = owner;
 	this.x = x;
@@ -91,7 +92,7 @@ Game.Player = function(color, owner, x, y) {
 	this.level = "testLevel1";
 	this.messages = [""];
 	this.appendMessage = function(msg) {
-		if (this.messages.length < 10) {
+		if (this.messages.length < 5) {
 			this.messages.push(msg);
 		} else {
 			this.messages.shift();
