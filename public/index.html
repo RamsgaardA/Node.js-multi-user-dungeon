@@ -5,18 +5,42 @@
 		<title>Node.js MUD</title>
 		<style>
 			#chatbox {
-				position: absolute;
-				left: 500px;
+				position: fixed;
+				left: 50%;
+				margin-left: +200px;
+			}
+			#console {
+				position: fixed;
+				left: 50%;
+				margin-left: -450px;
+				width: 200px;
+				word-wrap: break-word;
+			}
+			#Canvas {
+				position: fixed;
+				left: 50%;
+				margin-left: -200px;
+			}
+			#inputs {
+				position: fixed;
+				left: 50%;
+				top: 80%;
+				margin-left: -200px;
 			}
 		</style>
 	</head>
 	<body>
-		<div id="chatbox">Chat Messages:</div>
+		<div id="chatbox">
+			Chat Messages:
+		</div>
+		<div id="console">
+			Console:
+		</div>
 		<canvas id="Canvas" height="400" width="400">
 			Canvas
 		</canvas>
-		<div id="console"></div>
 		<br>
+		<div id="inputs">
 		<input type="submit" value="Start New Game" onclick="
 		socket.emit('StartGame');
 		">
@@ -24,7 +48,7 @@
 		<div id="session">
 			Session ID: *None, start a game or restore a session*
 		</div>
-		
+
 		<br>
 		<input type="text" id="sessioninput">
 		<input type="submit" value="Restore session" onclick="
@@ -41,6 +65,7 @@
 		chatMessage : document.getElementById('chatinput').value
 		});
 		">
+		</div>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="main.js"></script>
 		<script src="render.js"></script>
