@@ -55,6 +55,7 @@ io.sockets.on('connection', function(socket) {
         });
     });
     socket.on('chat', function(data) {
+	console.log(id + " Is saying: " + data.chatMessage);
         io.sockets.emit('chatupdate', {
             chatmessages : updateChat(data.chatMessage)
         });
@@ -65,6 +66,7 @@ io.sockets.on('connection', function(socket) {
         io.sockets.emit('update');
     });
     socket.on('changeid', function(data) {
+	console.log(id + " Has changed session to: " + data.newid);
         id = data.newid;
         socket.emit('snap', {
             snapshot : Game.makeSnap(id)
