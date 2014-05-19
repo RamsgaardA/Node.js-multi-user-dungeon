@@ -3,15 +3,14 @@ Game.Tiles = {};
 Game.Objects = [];
 Game.Levels = [];
 Game.Players = [];
-Game.Maps =[];
+Game.Maps = [];
 
-Game.Level = function(name, map){
+Game.Level = function(name, map) {
 	this.name = name;
 	this.groundLayer = Game.buildMap(map);
 	this.objects = [];
 	Game.Levels.push(this);
 };
-
 
 Game.Tile = function(isWalkable, symbol, color) {
 	this.isWalkable = isWalkable;
@@ -63,18 +62,8 @@ Game.Stairs = function(symbol, color, leadsto, x, y, level) {
 	this.isWalkable = true;
 	this.contents = {};
 	this.func = function(actor) {
-		if (Game.getPlayerIndexSafely(actor.name, Game.findLevel(actor.level, Game.Levels))) {
-			Game.findLevel(actor.level, Game.Levels).objects.splice(Game.getPlayerIndexSafely(actor.name, Game.findLevel(actor.level, Game.Levels)), 0);
-
-		}
-
 		actor.level = leadsto;
-		if (Game.findLevel(actor.level, Game.Levels)) {
-			Game.findLevel(actor.level, Game.Levels).objects.push(actor);
-			console.log("Player: " + actor.owner + " has entered: " + actor.level);
-		} else {
-			console.log("Error, level does not exist");
-		}
+		Game.distributeObjects(Game.Objects, Game.Levels);
 	};
 	this.x = x;
 	this.y = y;
@@ -114,4 +103,4 @@ Game.Player = function(color, owner, x, y) {
 	};
 	Game.Objects.push(this);
 	Game.Players.push(this);
-}; 
+};

@@ -217,7 +217,6 @@ Game.makeSnap = function(player) {
 					processedObject.x = ox;
 					processedObject.y = oy;
 					if (processedObject.type == "Player") {
-
 						if (processedObject.owner != player.owner) {
 							processedObject.owner = "";
 						}
