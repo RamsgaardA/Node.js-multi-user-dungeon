@@ -47,16 +47,14 @@ var lvl1stairs2 = new Game.Stairs(">", "Brown", "testLevel0", 14, 12, "testLevel
 
 var lvl2stairs = new Game.Stairs(">", "Green", "testLevel1", 24, 10, "testLevel2");
 
-var testLevel0 = new Game.Level("testLevel0", map1);
+var testLevel0 = new Game.Level("testLevel0", Game.Maps[0]);
 
-var testLevel1 = new Game.Level("testLevel1", map1);
+var testLevel1 = new Game.Level("testLevel1", Game.Maps[1]);
 
-var testLevel2 = new Game.Level("testLevel2", map1);
+var testLevel2 = new Game.Level("testLevel2", Game.Maps[2]);
 
 var testPlayer = new Game.Player("#0000ff", "anders", 13, 17);
 var testPlayer2 = new Game.Player("Red", "testuser", 4, 6);
 testPlayer2.level = "testLevel2";
 
 Game.distributeObjects(Game.Objects, Game.Levels);
-
-console.log(testLevel0.groundLayer);
