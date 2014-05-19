@@ -1,3 +1,0 @@
--Spawn users only on empty slots around the spawnpoint.
--Advanced level construction
--Nicer interface
