@@ -91,6 +91,19 @@ Game.checkObjects = function(x, y, objects) {
 
 };
 
+Game.getAllObjectsOnXY = function(x, y, objects) {
+	var foundObjects = [];
+        for (var a = 0; a < objects.length; a++) {
+                if (objects[a].x == x && objects[a].y == y) {
+                        foundObjects.push(objects[a]);
+                }
+        }
+	
+        return foundObjects;
+
+};
+
+
 Game.findObjectIndex = function(object, objects) {
 	for (var a = 0; a < objects.length; a++) {
 		if (objects[a] == object) {
@@ -199,7 +212,9 @@ Game.makeSnap = function(player) {
 			}
 
 			if (Game.checkObjects(x, y, level.objects)) {
-				var processedObject = JSON.parse(JSON.stringify(Game.checkObjects(x, y, level.objects)));
+				var objectsToProcess = Game.getAllObjectsOnXY(x, y, level.objects);
+				for(var abc = 0; abc < objectsToProcess.length; abc++){
+				var processedObject = JSON.parse(JSON.stringify(objectsToProcess[abc]));
 				processedObject.x = ox;
 				processedObject.y = oy;
 				if (processedObject.type == "Player") {
@@ -209,6 +224,7 @@ Game.makeSnap = function(player) {
 					}
 				}
 				newSnap.objects.push(processedObject);
+			}
 			}
 			ox++;
 		}
