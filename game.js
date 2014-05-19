@@ -285,7 +285,7 @@ Game.buildMap = function(map) {
     var finishedMap = [];
     for (var i = 0; i < map.length; i++) {
         finishedMap.push([]);
-        for (var x = 0; x < map[i].length; x++) {
+        for (var x = 0; x < map[i].length; x++) {0
             if (map[i][x] == 0) {
                 finishedMap[i].push(Game.Tiles.groundTile);
             } else if (map[i][x] == 1) {
@@ -329,6 +329,14 @@ Game.moveCreatures = function() {
     }
 };
 
+Game.sumDefense = function(player){
+	var sum = 0;
+	for(var i = 0; i < player.contents.armor.length; i++){
+		sum += player.contents.armor[i].def;
+	}
+	return sum;
+};
+
 Game.fight = function(player, creature) {
     var playerDamage = Math.round(Math.random() * 10 * ((player.contents.str * player.contents.weapon[0].atk) / creature.contents.def));
     if (Math.round(Math.random() + (0.01 * player.contents.agi)) == 1) {
@@ -346,7 +354,7 @@ Game.fight = function(player, creature) {
         Game.levelPlayer(player);
         return;
     }
-    var creatureDamage = Math.round(Math.random() * 10 * (creature.contents.atk / player.contents.armor[0].def));
+    var creatureDamage = Math.round(Math.random() * 10 * (creature.contents.atk / Game.sumDefense(player)));
     if (Math.round(Math.random() + (0.01 * creature.contents.agi)) == 1) {
         player.contents.hp -= creatureDamage;
         player.appendMessage("The " + creature.name + " hits you for " + creatureDamage + " damage.");
@@ -453,6 +461,8 @@ Game.levelPlayer = function(player) {
         player.contents.hp = player.contents.hp + (hp - player.contents.mhp);
         player.contents.mhp = hp;
     }
+    if(player.contents.level > initialLevel){
     player.appendMessage("You have risen from level " + initialLevel + " to level " + player.contents.level + ". Press 'z' to see your stats");
     console.log(player.owner + " has risen from level " + initialLevel + " to level " + player.contents.level + ".");
+    }
 };
