@@ -47,32 +47,16 @@ var lvl1stairs2 = new Game.Stairs(">", "Brown", "testLevel0", 14, 12, "testLevel
 
 var lvl2stairs = new Game.Stairs(">", "Green", "testLevel1", 24, 10, "testLevel2");
 
-testLevel0 = new Game.Level("testLevel0");
+var testLevel0 = new Game.Level("testLevel0", map1);
 
-testLevel1 = new Game.Level("testLevel1");
+var testLevel1 = new Game.Level("testLevel1", map1);
 
-testLevel2 = new Game.Level("testLevel2");
+var testLevel2 = new Game.Level("testLevel2", map1);
 
 var testPlayer = new Game.Player("#0000ff", "anders", 13, 17);
 var testPlayer2 = new Game.Player("Red", "testuser", 4, 6);
 testPlayer2.level = "testLevel2";
 
-for (var i = 0; i < 30; i++) {
-	testLevel0.groundLayer.push([]);
-	testLevel1.groundLayer.push([]);
-	testLevel2.groundLayer.push([]);
-	for (var x = 0; x < 30; x++) {
-		if (i == 15 && x == 15) {
-			testLevel0.groundLayer[i].push(Game.Tiles.centerTile);
-			testLevel1.groundLayer[i].push(Game.Tiles.centerTile);
-			testLevel2.groundLayer[i].push(Game.Tiles.centerTile);
-		} else {
-			testLevel0.groundLayer[i].push(Game.Tiles.testTile);
-			testLevel1.groundLayer[i].push(Game.Tiles.testTile);
-			testLevel2.groundLayer[i].push(Game.Tiles.testTile);
-		}
-
-	}
-}
-
 Game.distributeObjects(Game.Objects, Game.Levels);
+
+console.log(testLevel0.groundLayer);

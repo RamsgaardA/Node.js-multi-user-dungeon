@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 var gameclasses = require('./gameclasses.js');
 var game = require('./game.js');
+var maps = require('./maps.js');
 var gamecontent = require('./content.js');
 
 /* serves main page */
@@ -36,7 +37,7 @@ function uniqueid() {
         if (ascicode < 58 || ascicode > 64) {
             idstr += String.fromCharCode(ascicode);
         }
-    } while (idstr.length<32);
+    } while (idstr.length<16);
 
     return (idstr);
 }
@@ -46,8 +47,7 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('StartGame', function() {
         id = uniqueid();
-        var newPlayer = new Game.Player('#' + (Math.random() * 0xFFFFFF << 0).toString(16), id, 15, 15);
-        Game.Objects.push(newPlayer);
+        var newPlayer = new Game.Player('#' + (Math.random() * 0xFFFFFF << 0).toString(16), id, 0, 0);
         Game.distributeObjects(Game.Objects, Game.Levels);
         socket.emit('welcome', {
             snapshot : Game.makeSnap(id),

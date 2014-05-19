@@ -205,8 +205,10 @@ Game.makeSnap = function(player) {
 		for (var x = player.x - 5; x < player.x + 6; x++) {
 
 			if (Game.doesTileExist(x, y, level.groundLayer)) {
+				foundcount++;
 				newSnap.groundLayer[oy].push(level.groundLayer[y][x]);
 			} else {
+				lostcount++;
 				newSnap.groundLayer[oy].push(Game.Tiles.nullTile);
 			}
 
@@ -247,16 +249,18 @@ Game.distributeObjects = function(objects, levels) {
 Game.buildMap = function(map) {
 	var finishedMap = [];
 	for (var i = 0; i < map.length; i++) {
+		finishedMap.push([]);
 		for (var x = 0; x < map[i].length; x++) {
 			if (map[i][x] == 0) {
-				finishedMap.push(Game.Tiles.testTile);
+				finishedMap[i].push(Game.Tiles.testTile);
 			}
 			else if (map[i][x] == 1) {
-				finishedMap.push(Game.Tiles.centerTile);
+				finishedMap[i].push(Game.Tiles.centerTile);
 			} else {
-				finishedMap.push(Game.Tiles.nullTile);
+				finishedMap[i].push(Game.Tiles.nullTile);
 			}
 
 		}
 	}
+	return finishedMap;
 };

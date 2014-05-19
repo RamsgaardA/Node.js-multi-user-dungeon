@@ -3,10 +3,11 @@ Game.Tiles = {};
 Game.Objects = [];
 Game.Levels = [];
 Game.Players = [];
+Game.Maps =[];
 
-Game.Level = function(name){
+Game.Level = function(name, map){
 	this.name = name;
-	this.groundLayer = [];
+	this.groundLayer = Game.buildMap(map);
 	this.objects = [];
 	Game.Levels.push(this);
 };
