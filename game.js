@@ -1,50 +1,50 @@
 Game.move = function(direction, player) {
-	if (Game.checkPlayer(playerList, player)) {
-		var actualPlayer = Game.checkPlayer(playerList, player);
+	if (Game.checkPlayer(Game.Players, player)) {
+		var actualPlayer = Game.checkPlayer(Game.Players, player);
 	} else {
 		console.log("ERROR, could not find " + player + " in players!");
 		return false;
 	}
-	if (Game.findLevel(actualPlayer.level, levels)) {
-		var level = Game.findLevel(actualPlayer.level, levels);
+	if (Game.findLevel(actualPlayer.level, Game.Levels)) {
+		var level = Game.findLevel(actualPlayer.level, Game.Levels);
 	} else {
 		console.log("ERROR, could not find level " + actualPlayer.level);
 		return false;
 	}
 
-	for (var i = 0; i < playerList.length; i++) {
-		if (playerList[i].owner == player) {
+	for (var i = 0; i < Game.Players.length; i++) {
+		if (Game.Players[i].owner == player) {
 			switch(direction) {
 				case "l":
-					if (Game.checkObjects(playerList[i].x - 1, playerList[i].y, level.objects)) {
-						Game.checkObjects(playerList[i].x - 1, playerList[i].y, level.objects).func(actualPlayer);
+					if (Game.checkObjects(Game.Players[i].x - 1, Game.Players[i].y, level.objects)) {
+						Game.checkObjects(Game.Players[i].x - 1, Game.Players[i].y, level.objects).func(actualPlayer);
 					}
-					if (Game.checktile(playerList[i].x - 1, playerList[i].y, level)) {
-						playerList[i].x--;
+					if (Game.checktile(Game.Players[i].x - 1, Game.Players[i].y, level)) {
+						Game.Players[i].x--;
 					}
 					break;
 				case "u":
-					if (Game.checkObjects(playerList[i].x, playerList[i].y - 1, level.objects)) {
-						Game.checkObjects(playerList[i].x, playerList[i].y - 1, level.objects).func(actualPlayer);
+					if (Game.checkObjects(Game.Players[i].x, Game.Players[i].y - 1, level.objects)) {
+						Game.checkObjects(Game.Players[i].x, Game.Players[i].y - 1, level.objects).func(actualPlayer);
 					}
-					if (Game.checktile(playerList[i].x, playerList[i].y - 1, level)) {
-						playerList[i].y--;
+					if (Game.checktile(Game.Players[i].x, Game.Players[i].y - 1, level)) {
+						Game.Players[i].y--;
 					}
 					break;
 				case "r":
-					if (Game.checkObjects(playerList[i].x + 1, playerList[i].y, level.objects)) {
-						Game.checkObjects(playerList[i].x + 1, playerList[i].y, level.objects).func(actualPlayer);
+					if (Game.checkObjects(Game.Players[i].x + 1, Game.Players[i].y, level.objects)) {
+						Game.checkObjects(Game.Players[i].x + 1, Game.Players[i].y, level.objects).func(actualPlayer);
 					}
-					if (Game.checktile(playerList[i].x + 1, playerList[i].y, level)) {
-						playerList[i].x++;
+					if (Game.checktile(Game.Players[i].x + 1, Game.Players[i].y, level)) {
+						Game.Players[i].x++;
 					}
 					break;
 				case "d":
-					if (Game.checkObjects(playerList[i].x, playerList[i].y + 1, level.objects)) {
-						Game.checkObjects(playerList[i].x, playerList[i].y + 1, level.objects).func(actualPlayer);
+					if (Game.checkObjects(Game.Players[i].x, Game.Players[i].y + 1, level.objects)) {
+						Game.checkObjects(Game.Players[i].x, Game.Players[i].y + 1, level.objects).func(actualPlayer);
 					}
-					if (Game.checktile(playerList[i].x, playerList[i].y + 1, level)) {
-						playerList[i].y++;
+					if (Game.checktile(Game.Players[i].x, Game.Players[i].y + 1, level)) {
+						Game.Players[i].y++;
 					}
 					break;
 
@@ -140,13 +140,13 @@ Game.handleKey = function(data) {
 			Game.move("d", data.owner);
 			break;
 		case 90:
-			if (Game.checkPlayer(playerList, data.owner)) {
-				Game.checkPlayer(playerList, data.owner).func(data.key);
+			if (Game.checkPlayer(Game.Players, data.owner)) {
+				Game.checkPlayer(Game.Players, data.owner).func(data.key);
 			}
 			break;
 		case 88:
-			if (Game.checkPlayer(playerList, data.owner)) {
-				Game.checkPlayer(playerList, data.owner).func(data.key);
+			if (Game.checkPlayer(Game.Players, data.owner)) {
+				Game.checkPlayer(Game.Players, data.owner).func(data.key);
 			}
 			break;
 
@@ -182,16 +182,16 @@ Game.makeSnap = function(player) {
 		groundLayer : [],
 		objects : []
 	};
-	if (Game.checkPlayer(playerList, player)) {
-		var player = Game.checkPlayer(playerList, player);
+	if (Game.checkPlayer(Game.Players, player)) {
+		var player = Game.checkPlayer(Game.Players, player);
 	} else {
 		return {
 			groundLayer : [[Game.Tiles.nullTile]],
 			objects : []
 		};
 	}
-	if (Game.findLevel(player.level, levels)) {
-		var level = Game.findLevel(player.level, levels);
+	if (Game.findLevel(player.level, Game.Levels)) {
+		var level = Game.findLevel(player.level, Game.Levels);
 	} else {
 		return {
 			groundLayer : [[Game.Tiles.nullTile]],
@@ -232,4 +232,15 @@ Game.makeSnap = function(player) {
 		oy++;
 	}
 	return newSnap;
+};
+
+Game.distributeObjects = function(objects, levels){
+	for(var i = 0; i < objects.length; i++){
+		var lookingFor = objects[i].level;
+		for(var a = 0; a < levels.length; a++){
+			if(levels[a].name == lookingFor){
+				levels[a].objects.push(objects[i]);
+			}
+		}
+	}
 };

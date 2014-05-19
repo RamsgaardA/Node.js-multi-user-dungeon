@@ -1,6 +1,16 @@
 Game = {};
 Game.Tiles = {};
-Game.Objects = {};
+Game.Objects = [];
+Game.Levels = [];
+Game.Players = [];
+
+Game.Level = function(name){
+	this.name = name;
+	this.groundLayer = [];
+	this.objects = [];
+	Game.Levels.push(this);
+};
+
 
 Game.Tile = function(isWalkable, symbol, color) {
 	this.isWalkable = isWalkable;
@@ -18,6 +28,7 @@ Game.GameObject = function(type, symbol, color, isWalkable, contents, func, x, y
 	this.x = x;
 	this.y = y;
 	this.level = level;
+	Game.Objects.push(this);
 };
 
 Game.Weapon = function(name, weight, piercing, slashing, bludgeoning) {
@@ -51,14 +62,14 @@ Game.Stairs = function(symbol, color, leadsto, x, y, level) {
 	this.isWalkable = true;
 	this.contents = {};
 	this.func = function(actor) {
-		if (Game.getPlayerIndexSafely(actor.name, Game.findLevel(actor.level, levels))) {
-			Game.findLevel(actor.level, levels).objects.splice(Game.getPlayerIndexSafely(actor.name, Game.findLevel(actor.level, levels)), 0);
+		if (Game.getPlayerIndexSafely(actor.name, Game.findLevel(actor.level, Game.Levels))) {
+			Game.findLevel(actor.level, Game.Levels).objects.splice(Game.getPlayerIndexSafely(actor.name, Game.findLevel(actor.level, Game.Levels)), 0);
 
 		}
 
 		actor.level = leadsto;
-		if (Game.findLevel(actor.level, levels)) {
-			Game.findLevel(actor.level, levels).objects.push(actor);
+		if (Game.findLevel(actor.level, Game.Levels)) {
+			Game.findLevel(actor.level, Game.Levels).objects.push(actor);
 			console.log("Player: " + actor.owner + " has entered: " + actor.level);
 		} else {
 			console.log("Error, level does not exist");
@@ -67,6 +78,7 @@ Game.Stairs = function(symbol, color, leadsto, x, y, level) {
 	this.x = x;
 	this.y = y;
 	this.level = level;
+	Game.Objects.push(this);
 };
 
 Game.Player = function(color, owner, x, y) {
@@ -99,4 +111,6 @@ Game.Player = function(color, owner, x, y) {
 			this.messages.push(msg);
 		}
 	};
+	Game.Objects.push(this);
+	Game.Players.push(this);
 }; 
