@@ -39,6 +39,13 @@ var testCreature = new Game.GameObject("Creature", "j", "Red", false, {
 
 }, 5, 16, "testLevel0");
 
+var testEquipment = new Game.GameObject("Equpiment", "c", "Yellow", false, {}, function(actor){
+	var club = new Game.Weapon("Club", 3, 0, 0, 4);
+	actor.contents.weapon = [club];
+	actor.appendMessage("Got a club!");
+	
+}, 20,20, "testLevel1");
+
 var lvl0stairs = new Game.Stairs("<", "Brown", "testLevel1", 14, 12, "testLevel0");
 
 var lvl1stairs = new Game.Stairs("<", "Green", "testLevel2", 24, 10, "testLevel1");
