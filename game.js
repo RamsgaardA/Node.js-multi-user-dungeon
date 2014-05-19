@@ -1,3 +1,17 @@
+Game.then = Date.now();
+
+Game.update = function(){
+	var now = Date.now();
+	var delta = now - Game.then;
+	
+	if(delta > 1000){
+		Game.moveCreatures();
+		Game.then = now;
+	}
+	
+	
+};
+
 Game.move = function(direction, player) {
 	if (Game.checkPlayer(Game.Players, player)) {
 		var actualPlayer = Game.checkPlayer(Game.Players, player);

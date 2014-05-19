@@ -32,7 +32,6 @@ var testCreature = new Game.GameObject("Creature", "j", "Red", false, {
 	actor.contents.hp -= this.contents.str * this.contents.sdam * (Math.random() * 10 + this.contents.agi);
 	actor.appendMessage("You hurt the creature");
 	if (this.contents.hp < 0) {
-		console.log("hp < 0");
 		Game.findLevel(this.level, Game.Levels).objects.splice(Game.findObjectIndex(this, Game.findLevel(this.level, Game.Levels).objects), 1);
 		actor.appendMessage("You slay the creature");
 	}

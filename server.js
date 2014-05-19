@@ -62,6 +62,7 @@ io.sockets.on('connection', function(socket) {
 	});
 	socket.on('keypress', function(data) {
 		Game.handleKey(data);
+		Game.update();
 		io.sockets.emit('update');
 	});
 	socket.on('changeid', function(data) {
