@@ -47,8 +47,8 @@ io.sockets.on('connection', function(socket) {
     socket.on('StartGame', function() {
         id = uniqueid();
         var newPlayer = new Game.Player('#' + (Math.random() * 0xFFFFFF << 0).toString(16), id, 15, 15);
-        playerList.push(newPlayer);
-        testLevel1.objects.push(newPlayer);
+        Game.Objects.push(newPlayer);
+        Game.distributeObjects(Game.Objects, Game.Levels);
         socket.emit('welcome', {
             snapshot : Game.makeSnap(id),
             id : id
