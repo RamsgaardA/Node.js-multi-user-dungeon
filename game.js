@@ -233,10 +233,10 @@ Game.makeSnap = function(player) {
 	return newSnap;
 };
 
-Game.clearLevels = function(levels){
+Game.clearLevels = function(levels) {
 	for (var a = 0; a < levels.length; a++) {
-			levels[a].objects = [];
-		}
+		levels[a].objects = [];
+	}
 };
 
 Game.distributeObjects = function(objects, levels) {
@@ -258,8 +258,7 @@ Game.buildMap = function(map) {
 		for (var x = 0; x < map[i].length; x++) {
 			if (map[i][x] == 0) {
 				finishedMap[i].push(Game.Tiles.testTile);
-			}
-			else if (map[i][x] == 1) {
+			} else if (map[i][x] == 1) {
 				finishedMap[i].push(Game.Tiles.centerTile);
 			} else {
 				finishedMap[i].push(Game.Tiles.nullTile);
@@ -268,4 +267,20 @@ Game.buildMap = function(map) {
 		}
 	}
 	return finishedMap;
+};
+
+Game.spawnPlayer = function(id, startx, starty) {
+	var x = startx;
+	var y = starty;
+	while (!Game.checktile(x, y, Game.Levels[1])) {
+		if (x < Game.Levels[1].groundLayer[0].length-1) {
+			x++;
+		} else if (y < Game.Levels[1].groundLayer.length-1) {
+			y++;
+			x=0;
+		}
+	}
+	var newPlayer = new Game.Player('#' + ('00' + (Math.random() * 4096 << 0).toString(16)).substr(-3), id, x, y);
+	Game.distributeObjects(Game.Objects, Game.Levels);
+
 };
