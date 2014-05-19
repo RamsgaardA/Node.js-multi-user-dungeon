@@ -1,6 +1,6 @@
 var Helpers = {
     GetRandom : function(low, high) {
-        return ~~(Math.random() * (high - low)) + low;
+        return Math.round((Math.random() * (high - low)) + low);
     }
 };
 
@@ -172,3 +172,23 @@ Game.makeDungeon = function(size) {
     return this.Convert(this.map);
 };
 
+Game.populateDungeons = function(levels){
+	for(var i = 0; i < levels.length - 1; i++){
+	console.log("Looping bridging levels");
+		var max = levels[i].groundLayer[0].length;
+		var x = Helpers.GetRandom(1, max);
+		var y = Helpers.GetRandom(1, max);
+		if(Game.checktile(x, y, levels[i])){
+			console.log("Tile clear");
+			if(Game.checktile(x, y, levels[i+1])){
+			console.log("Also clear");
+			new Game.Stairs("<", "Blue", levels[i+1].name, x,y, levels[i].name);
+			new Game.Stairs(">", "Blue", levels[i].name, x,y, levels[i+1].name);
+			} else {
+			i--;
+			}
+		} else {
+		i--;
+		}	
+	}
+};
