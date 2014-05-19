@@ -24,14 +24,6 @@ Client.Render = function(snapshot) {
 			if (Client.Render.checkObjects(snapshot.objects, ix, iy)) {
 				var objectToRender = Client.Render.checkObjects(snapshot.objects, ix, iy);
 				ctx.fillStyle = objectToRender.color;
-				if (objectToRender.type == "Player") {
-					if (objectToRender.owner != "") {
-						for (var msg = 0; msg < objectToRender.messages.length; msg++) {
-	
-							consoleout.innerHTML += objectToRender.messages[msg] + "<br>";
-						}
-					}
-				}
 				ctx.fillText(objectToRender.symbol, x + 22, y + 22);
 
 			} else {
@@ -45,6 +37,12 @@ Client.Render = function(snapshot) {
 		x = 0;
 
 	}
+	if(Client.Render.lookForPlayer(snapshot.objects, Client.owner)){
+		var messages = Client.Render.lookForPlayer(snapshot.objects, Client.owner).messages;
+		for(var i = 0; i < messages.length; i++){
+			consoleout.innerHTML += messages[i] + "<br>";
+		}
+	}
 
 };
 
@@ -54,6 +52,18 @@ Client.Render.checkObjects = function(objects, x, y) {
 	for (var a = 0; a < objects.length; a++) {
 		if (objects[a].x == x && objects[a].y == y) {
 			return objects[a];
+		}
+	}
+	return false;
+};
+
+//Loop through all objects, find players, look for specific player.
+Client.Render.lookForPlayer = function(objects, playername){
+	for(var a = 0; a < objects.length; a++){
+		if(objects[a].type == "Player"){
+			if(objects[a].owner == playername){
+				return objects[a];
+			}
 		}
 	}
 	return false;
