@@ -205,10 +205,8 @@ Game.makeSnap = function(player) {
 		for (var x = player.x - 5; x < player.x + 6; x++) {
 
 			if (Game.doesTileExist(x, y, level.groundLayer)) {
-				foundcount++;
 				newSnap.groundLayer[oy].push(level.groundLayer[y][x]);
 			} else {
-				lostcount++;
 				newSnap.groundLayer[oy].push(Game.Tiles.nullTile);
 			}
 
@@ -235,7 +233,14 @@ Game.makeSnap = function(player) {
 	return newSnap;
 };
 
+Game.clearLevels = function(levels){
+	for (var a = 0; a < levels.length; a++) {
+			levels[a].objects = [];
+		}
+};
+
 Game.distributeObjects = function(objects, levels) {
+	Game.clearLevels(levels);
 	for (var i = 0; i < objects.length; i++) {
 		var lookingFor = objects[i].level;
 		for (var a = 0; a < levels.length; a++) {
