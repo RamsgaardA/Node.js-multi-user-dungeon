@@ -93,16 +93,15 @@ Game.checkObjects = function(x, y, objects) {
 
 Game.getAllObjectsOnXY = function(x, y, objects) {
 	var foundObjects = [];
-        for (var a = 0; a < objects.length; a++) {
-                if (objects[a].x == x && objects[a].y == y) {
-                        foundObjects.push(objects[a]);
-                }
-        }
-	
-        return foundObjects;
+	for (var a = 0; a < objects.length; a++) {
+		if (objects[a].x == x && objects[a].y == y) {
+			foundObjects.push(objects[a]);
+		}
+	}
+
+	return foundObjects;
 
 };
-
 
 Game.findObjectIndex = function(object, objects) {
 	for (var a = 0; a < objects.length; a++) {
@@ -213,18 +212,18 @@ Game.makeSnap = function(player) {
 
 			if (Game.checkObjects(x, y, level.objects)) {
 				var objectsToProcess = Game.getAllObjectsOnXY(x, y, level.objects);
-				for(var abc = 0; abc < objectsToProcess.length; abc++){
-				var processedObject = JSON.parse(JSON.stringify(objectsToProcess[abc]));
-				processedObject.x = ox;
-				processedObject.y = oy;
-				if (processedObject.type == "Player") {
-					
-					if (processedObject.owner != player.owner) {
-						processedObject.owner = "";
+				for (var abc = 0; abc < objectsToProcess.length; abc++) {
+					var processedObject = JSON.parse(JSON.stringify(objectsToProcess[abc]));
+					processedObject.x = ox;
+					processedObject.y = oy;
+					if (processedObject.type == "Player") {
+
+						if (processedObject.owner != player.owner) {
+							processedObject.owner = "";
+						}
 					}
+					newSnap.objects.push(processedObject);
 				}
-				newSnap.objects.push(processedObject);
-			}
 			}
 			ox++;
 		}
@@ -234,13 +233,30 @@ Game.makeSnap = function(player) {
 	return newSnap;
 };
 
-Game.distributeObjects = function(objects, levels){
-	for(var i = 0; i < objects.length; i++){
+Game.distributeObjects = function(objects, levels) {
+	for (var i = 0; i < objects.length; i++) {
 		var lookingFor = objects[i].level;
-		for(var a = 0; a < levels.length; a++){
-			if(levels[a].name == lookingFor){
+		for (var a = 0; a < levels.length; a++) {
+			if (levels[a].name == lookingFor) {
 				levels[a].objects.push(objects[i]);
 			}
+		}
+	}
+};
+
+Game.buildMap = function(map) {
+	var finishedMap = [];
+	for (var i = 0; i < map.length; i++) {
+		for (var x = 0; x < map[i].length; x++) {
+			if (map[i][x] == 0) {
+				finishedMap.push(Game.Tiles.testTile);
+			}
+			else if (map[i][x] == 1) {
+				finishedMap.push(Game.Tiles.centerTile);
+			} else {
+				finishedMap.push(Game.Tiles.nullTile);
+			}
+
 		}
 	}
 };
