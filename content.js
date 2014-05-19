@@ -39,12 +39,22 @@ var testCreature = new Game.GameObject("Creature", "j", "Red", false, {
 
 }, 5, 16, "testLevel0");
 
-var testEquipment = new Game.GameObject("Equpiment", "c", "Yellow", false, {}, function(actor){
+testCreature.move = function(){
+	if(Math.round(Math.random()) == 1){
+		this.x += Math.round(Math.random());
+		this.x -= Math.round(Math.random());
+	} else {
+		this.y += Math.round(Math.random());
+		this.y -= Math.round(Math.random());
+	}
+};
+
+var testEquipment = new Game.GameObject("Equpiment", "c", "Yellow", false, {}, function(actor) {
 	var club = new Game.Weapon("Club", 3, 0, 0, 4);
 	actor.contents.weapon = [club];
 	actor.appendMessage("Got a club!");
-	
-}, 20,20, "testLevel1");
+
+}, 20, 20, "testLevel1");
 
 var lvl0stairs = new Game.Stairs("<", "Brown", "testLevel1", 14, 12, "testLevel0");
 
@@ -64,4 +74,4 @@ var testPlayer = new Game.Player("#0000ff", "anders", 13, 17);
 var testPlayer2 = new Game.Player("Red", "testuser", 4, 6);
 testPlayer2.level = "testLevel2";
 
-Game.distributeObjects(Game.Objects, Game.Levels);
+Game.distributeObjects(Game.Objects, Game.Levels); 

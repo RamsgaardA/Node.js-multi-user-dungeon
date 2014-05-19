@@ -284,3 +284,13 @@ Game.spawnPlayer = function(id, startx, starty) {
 	Game.distributeObjects(Game.Objects, Game.Levels);
 
 };
+
+Game.moveCreatures = function(){
+	for(var i = 0; i < Game.Objects.length; i++){
+		if(Game.Objects[i].type == "Creature"){
+			if(Game.Objects[i].move){
+				Game.Objects[i].move();
+			}
+		}
+	}
+};
