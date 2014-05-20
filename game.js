@@ -317,3 +317,46 @@ Game.fight = function(actor1, actor2){
     
     
 };
+
+Game.generatePlayerStats = function(){
+    var rand = Math.round(Math.random()*2);
+    if(rand == 0){
+        var weapon = Game.Items.sharpStick;
+    } else if(rand == 1){
+        var weapon = Game.Items.woodenClub;
+    } else if(rand == 2){
+        var weapon = Game.Items.woodenSword;
+    }
+    
+    var stats = {
+        str : 0,
+        agi : 0,
+        con : 0,
+        hp : 100,
+        mhp : 100,
+        weapon : [weapon],
+        armor : [Game.Items.loinCloth]
+   };
+   
+   var points = 10;
+   
+   while(points > 0){
+       var distribute = Math.round(Math.random()*1);
+       if(points - distribute > -1){
+           stats.str += distribute;
+           points -= distribute;
+       }
+       distribute = Math.round(Math.random()*1);
+       if(points - distribute > -1){
+           stats.agi += distribute;
+           points -= distribute;
+       }
+       distribute = Math.round(Math.random()*1);
+       if(points - distribute > -1){
+           stats.con += distribute;
+           points -= distribute;
+       }
+   }
+   
+   return stats;
+};

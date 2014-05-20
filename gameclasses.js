@@ -1,5 +1,6 @@
 Game = {};
 Game.Tiles = {};
+Game.Items = {};
 Game.Objects = [];
 Game.Levels = [];
 Game.Players = [];
@@ -52,9 +53,6 @@ Game.Armor = function(name, weight, layer, piercing, slashing, bludgeoning) {
 
 };
 
-var stick = new Game.Weapon("Stick", 2, 2, 1, 1);
-var loinCloth = new Game.Armor("Loin Cloth", 2, 0, 1, 1, 1);
-
 Game.Stairs = function(symbol, color, leadsto, x, y, level) {
 	this.type = "Stairs";
 	this.symbol = symbol;
@@ -76,15 +74,7 @@ Game.Player = function(color, owner, x, y) {
 	this.symbol = "@";
 	this.color = color;
 	this.isWalkable = false;
-	this.contents = {
-		str : 4,
-		agi : 4,
-		con : 4,
-		hp : 100,
-		mhp : 100,
-		weapon : [stick],
-		armor : [loinCloth]
-	};
+	this.contents = Game.generatePlayerStats();
 	this.func = function(actor){
 	    actor.appendMessage("Another player.");
 	};

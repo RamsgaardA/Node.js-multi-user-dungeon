@@ -4,6 +4,14 @@ Game.Tiles.indoorTile = new Game.Tile(true, "_", "Black");
 Game.Tiles.centerTile = new Game.Tile(true, "X", "Green");
 Game.Tiles.nullTile = new Game.Tile(false, "?", "White");
 
+
+Game.Items.sharpStick = new Game.Weapon("Sharp Stick", 1, 2, 1, 1);
+Game.Items.woodenClub = new Game.Weapon("Wooden Club", 1, 1, 1, 2);
+Game.Items.woodenSword = new Game.Weapon("Wooden Sword", 1, 1, 2, 1);
+
+Game.Items.loinCloth = new Game.Armor("Loin Cloth", 2, 0, 1, 1, 1);
+
+
 var testObject = new Game.GameObject("dummy", "a", "Pink", false, {
 	health : 0,
 	maxhealth : 0,
@@ -51,8 +59,7 @@ testCreature.move = function(){
 };
 
 var testEquipment = new Game.GameObject("Equpiment", "c", "Yellow", false, {}, function(actor) {
-	var club = new Game.Weapon("Club", 3, 0, 0, 4);
-	actor.contents.weapon = [club];
+	actor.contents.weapon = [Game.Items.woodenClub];
 	actor.appendMessage("Got a club!");
 
 }, 20, 20, "testLevel1");
