@@ -69,17 +69,17 @@ Game.Stairs = function(symbol, color, leadsto, x, y, level) {
 	Game.Objects.push(this);
 };
 
-Game.Player = function(color, owner, x, y) {
+Game.Player = function(color, owner, contents, x, y) {
 	this.type = "Player";
 	this.symbol = "@";
 	this.color = color;
 	this.isWalkable = false;
-	this.contents = Game.generatePlayerStats();
+	this.contents = contents;
 	this.func = function(actor){
 	    actor.appendMessage("Another player.");
 	};
 	this.handlekeys = function(inp) {
-		this.appendMessage(JSON.stringify(this.contents));
+		this.appendMessage(Game.stripJSON(JSON.stringify(this.contents)));
 	};
 	this.owner = owner;
 	this.x = x;
