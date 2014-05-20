@@ -1,4 +1,6 @@
-Game.Tiles.testTile = new Game.Tile(true, "_", "Black");
+Game.Tiles.groundTile = new Game.Tile(true, "_", "Brown");
+Game.Tiles.wallTile = new Game.Tile(false, "#", "Black");
+Game.Tiles.indoorTile = new Game.Tile(true, "_", "Black");
 Game.Tiles.centerTile = new Game.Tile(true, "X", "Green");
 Game.Tiles.nullTile = new Game.Tile(false, "?", "White");
 

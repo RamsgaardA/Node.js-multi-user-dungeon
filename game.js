@@ -269,11 +269,15 @@ Game.buildMap = function(map) {
 	for (var i = 0; i < map.length; i++) {
 		finishedMap.push([]);
 		for (var x = 0; x < map[i].length; x++) {
-			if (map[i][x] == 0) {
-				finishedMap[i].push(Game.Tiles.testTile);
+			       if (map[i][x] == 0) {
+				finishedMap[i].push(Game.Tiles.groundTile);
 			} else if (map[i][x] == 1) {
-				finishedMap[i].push(Game.Tiles.centerTile);
-			} else {
+				finishedMap[i].push(Game.Tiles.wallTile);
+			} else if (map[i][x] == 2) {
+                finishedMap[i].push(Game.Tiles.centerTile);
+            } else if (map[i][x] == 3) {
+                finishedMap[i].push(Game.Tiles.indoorTile );
+            } else {
 				finishedMap[i].push(Game.Tiles.nullTile);
 			}
 
@@ -306,4 +310,10 @@ Game.moveCreatures = function(){
 			}
 		}
 	}
+};
+
+Game.fight = function(actor1, actor2){
+    
+    
+    
 };
