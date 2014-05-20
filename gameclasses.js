@@ -85,7 +85,7 @@ Game.Player = function(color, owner, x, y) {
 		weapon : [stick],
 		armor : [loinCloth]
 	};
-	this.func = function(inp) {
+	this.handlekeys = function(inp) {
 		this.appendMessage(JSON.stringify(this.contents));
 	};
 	this.owner = owner;

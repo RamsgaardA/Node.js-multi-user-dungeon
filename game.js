@@ -154,12 +154,12 @@ Game.handleKey = function(data) {
 			break;
 		case 90:
 			if (Game.checkPlayer(Game.Players, data.owner)) {
-				Game.checkPlayer(Game.Players, data.owner).func(data.key);
+				Game.checkPlayer(Game.Players, data.owner).handlekeys(data.key);
 			}
 			break;
 		case 88:
 			if (Game.checkPlayer(Game.Players, data.owner)) {
-				Game.checkPlayer(Game.Players, data.owner).func(data.key);
+				Game.checkPlayer(Game.Players, data.owner).handlekeys(data.key);
 			}
 			break;
 
