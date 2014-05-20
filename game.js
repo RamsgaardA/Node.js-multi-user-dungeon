@@ -29,35 +29,35 @@ Game.move = function(direction, player) {
         if (Game.Players[i].owner == player) {
             switch(direction) {
                 case "l":
-                    if (Game.checkObjects(Game.Players[i].x - 1, Game.Players[i].y, level.objects)) {
-                        Game.checkObjects(Game.Players[i].x - 1, Game.Players[i].y, level.objects).func(actualPlayer);
+                    if (Game.checkObjects(actualPlayer.x - 1, actualPlayer.y, level.objects)) {
+                        Game.checkObjects(actualPlayer.x - 1, actualPlayer.y, level.objects).func(actualPlayer);
                     }
-                    if (Game.checktile(Game.Players[i].x - 1, Game.Players[i].y, level)) {
-                        Game.Players[i].x--;
+                    if (Game.checktile(actualPlayer.x - 1, actualPlayer.y, level)) {
+                        actualPlayer.x--;
                     }
                     break;
                 case "u":
-                    if (Game.checkObjects(Game.Players[i].x, Game.Players[i].y - 1, level.objects)) {
-                        Game.checkObjects(Game.Players[i].x, Game.Players[i].y - 1, level.objects).func(actualPlayer);
+                    if (Game.checkObjects(actualPlayer.x, actualPlayer.y - 1, level.objects)) {
+                        Game.checkObjects(actualPlayer.x, actualPlayer.y - 1, level.objects).func(actualPlayer);
                     }
-                    if (Game.checktile(Game.Players[i].x, Game.Players[i].y - 1, level)) {
-                        Game.Players[i].y--;
+                    if (Game.checktile(actualPlayer.x, actualPlayer.y - 1, level)) {
+                        actualPlayer.y--;
                     }
                     break;
                 case "r":
-                    if (Game.checkObjects(Game.Players[i].x + 1, Game.Players[i].y, level.objects)) {
-                        Game.checkObjects(Game.Players[i].x + 1, Game.Players[i].y, level.objects).func(actualPlayer);
+                    if (Game.checkObjects(actualPlayer.x + 1, actualPlayer.y, level.objects)) {
+                        Game.checkObjects(actualPlayer.x + 1, actualPlayer.y, level.objects).func(actualPlayer);
                     }
-                    if (Game.checktile(Game.Players[i].x + 1, Game.Players[i].y, level)) {
-                        Game.Players[i].x++;
+                    if (Game.checktile(actualPlayer.x + 1, actualPlayer.y, level)) {
+                        actualPlayer.x++;
                     }
                     break;
                 case "d":
-                    if (Game.checkObjects(Game.Players[i].x, Game.Players[i].y + 1, level.objects)) {
-                        Game.checkObjects(Game.Players[i].x, Game.Players[i].y + 1, level.objects).func(actualPlayer);
+                    if (Game.checkObjects(actualPlayer.x, actualPlayer.y + 1, level.objects)) {
+                        Game.checkObjects(actualPlayer.x, actualPlayer.y + 1, level.objects).func(actualPlayer);
                     }
-                    if (Game.checktile(Game.Players[i].x, Game.Players[i].y + 1, level)) {
-                        Game.Players[i].y++;
+                    if (Game.checktile(actualPlayer.x, actualPlayer.y + 1, level)) {
+                        actualPlayer.y++;
                     }
                     break;
 
@@ -311,7 +311,34 @@ Game.moveCreatures = function() {
     }
 };
 
-Game.fight = function(actor1, actor2) {
+Game.fight = function(player, creature) {
+    var playerDamage = (player.contents.str * player.contents.weapon[0].atk) / creature.contents.def;
+    if (Math.round(Math.random() + (0.01 * player.contents.agi)) == 1) {
+        creature.contents.hp -= playerDamage;
+        player.appendMessage("You hit the " + creature.name + " for " + playerDamage + " damage.");
+    } else {
+        player.appendMessage("You miss the " + creature.name + ".");
+    }
+
+    if (creature.contents.hp < 0) {
+        Game.findLevel(creature.level, Game.Levels).objects.splice(Game.findObjectIndex(creature, Game.findLevel(creature.level, Game.Levels).objects), 1);
+        Game.Objects.splice(Game.findObjectIndex(creature, Game.Objects), 1);
+        player.appendMessage("You slay the creature.");
+        return;
+    }
+    var creatureDamage = creature.contents.atk / player.contents.armor[0].def;
+    if (Math.round(Math.random() + (0.01 * creature.contents.agi)) == 1) {
+        player.contents.hp -= creatureDamage;
+        player.appendMessage("The " + creature.name + " hits you for " + creatureDamage + " damage.");
+    } else {
+        player.appendMessage("The " + creature.name + " misses you.");
+    }
+    if (player.contents.hp < 0) {
+        Game.findLevel(player.level, Game.Levels).objects.splice(Game.findObjectIndex(player, Game.findLevel(player.level, Game.Levels).objects), 1);
+        Game.Objects.splice(Game.findObjectIndex(player, Game.Objects), 1);
+        Game.Players.splice(Game.getPlayerIndexSafely(player.name, Game.Players), 1);
+        return;
+    }
 
 };
 
@@ -354,7 +381,12 @@ Game.generatePlayerStats = function() {
             points -= distribute;
         }
     }
-
+    var hp = stats.mhp;
+    for (var i = 0; i < stats.con; i++) {
+        hp = Math.round(hp * 1.1);
+    }
+    stats.hp = hp;
+    stats.mhp = hp;
     return stats;
 };
 
@@ -363,7 +395,7 @@ Game.stripJSON = function(JSONtoStrip) {
     var output = "";
     for (var i = 0; i < split.length; i++) {
         if (split[i] == '"') {
-            output+= " ";
+            output += " ";
         } else {
             output += split[i];
         }

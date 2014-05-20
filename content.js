@@ -4,18 +4,13 @@ Game.Tiles.indoorTile = new Game.Tile(true, "_", "Black");
 Game.Tiles.centerTile = new Game.Tile(true, "X", "Green");
 Game.Tiles.nullTile = new Game.Tile(false, "?", "White");
 
-Game.Items.sharpStick = new Game.Weapon("Sharp Stick", 1, 2, 1, 1);
-Game.Items.woodenClub = new Game.Weapon("Wooden Club", 1, 1, 1, 2);
-Game.Items.woodenSword = new Game.Weapon("Wooden Sword", 1, 1, 2, 1);
+Game.Items.sharpStick = new Game.Weapon("Sharp Stick", 1, 1);
+Game.Items.woodenClub = new Game.Weapon("Wooden Club", 1, 1);
+Game.Items.woodenSword = new Game.Weapon("Wooden Sword", 1, 1);
+Game.Items.ironSword = new Game.Weapon("Iron Sword", 2, 10);
 
-Game.Items.loinCloth = new Game.Armor("Loin Cloth", 2, 0, 1, 1, 1);
-
-var testObject = new Game.GameObject("dummy", "a", "Pink", false, {
-    health : 0,
-    maxhealth : 0,
-    attack : 2
-}, function() {
-}, 2, 3, "testLevel1");
+Game.Items.loinCloth = new Game.Armor("Loin Cloth", 2, 0, 1);
+Game.Items.breastPlate = new Game.Armor("Iron Breast Plate", 3, 2, 10);
 
 var testObject2 = new Game.GameObject("dummy", "h", "Red", false, {
     health : 0,
@@ -24,47 +19,22 @@ var testObject2 = new Game.GameObject("dummy", "h", "Red", false, {
 }, function() {
 }, 20, 12, "testLevel2");
 
-var testCreature = new Game.GameObject("Creature", "j", "Red", false, {
-    str : 4,
-    agi : 4,
-    con : 4,
-    hp : 100,
-    mhp : 100,
-    pdam : 1,
-    sdam : 2,
-    bdam : 1
-}, function(actor) {
-
-    this.contents.hp -= actor.contents.str * actor.contents.weapon[0].piercing * (Math.random() * 10 + actor.contents.agi);
-
-    actor.contents.hp -= this.contents.str * this.contents.sdam * (Math.random() * 10 + this.contents.agi);
-    actor.appendMessage("You hurt the creature");
-    if (this.contents.hp < 0) {
-        Game.findLevel(this.level, Game.Levels).objects.splice(Game.findObjectIndex(this, Game.findLevel(this.level, Game.Levels).objects), 1);
-        Game.Objects.splice(Game.findObjectIndex(this, Game.Objects), 1);
-        actor.appendMessage("You slay the creature");
-    }
-
+var testCreature = new Game.HostileCreature("j", "Jester", "Red", {
+    hp : 20,
+    mhp : 20,
+    atk : 4,
+    def : 2,
+    agi : 1
 }, 5, 16, "testLevel0");
 
-testCreature.move = function() {
-    var fx = Math.round(Math.random());
-    var bx = Math.round(Math.random());
-    var fy = Math.round(Math.random());
-    var by = Math.round(Math.random());
+var testCreature2 = new Game.HostileCreature("D", "Demon Lord", "Red", {
+    hp : 200,
+    mhp : 200,
+    atk : 20,
+    def : 5,
+    agi : 5
+}, 6, 18, "testLevel0");
 
-    if (Math.round(Math.random()) == 1) {
-        if (Game.checktile(this.x + fx - bx, this.y, Game.findLevel(this.level, Game.Levels))) {
-            this.x += fx;
-            this.x -= bx;
-        }
-    } else {
-        if (Game.checktile(this.x, this.y + fy - by, Game.findLevel(this.level, Game.Levels))) {
-            this.y += fy;
-            this.y -= by;
-        }
-    }
-};
 
 var testEquipment = new Game.GameObject("Equpiment", "c", "Yellow", false, {}, function(actor) {
     actor.contents.weapon = [Game.Items.woodenClub];
@@ -92,8 +62,8 @@ var testPlayer = new Game.Player("#0000ff", "anders", {
     con : 20,
     hp : 200,
     mhp : 200,
-    weapon : [Game.Items.woodenSword],
-    armor : [Game.Items.loinCloth]
+    weapon : [Game.Items.ironSword],
+    armor : [Game.Items.breastPlate]
 }, 13, 17);
 
 var testPlayer2 = new Game.Player("Red", "testuser", Game.generatePlayerStats(), 4, 6);
