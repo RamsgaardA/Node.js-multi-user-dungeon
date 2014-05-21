@@ -425,6 +425,7 @@ Game.stripJSON = function(JSONtoStrip) {
 };
 
 Game.levelPlayer = function(player) {
+    var initialLevel = player.contents.level;
     while (player.contents.exp > player.contents.level * player.contents.level) {
         player.contents.level += 1;
         console.log(player.owner + " is leveling up! He is now level: " + player.contents.level);
@@ -453,4 +454,5 @@ Game.levelPlayer = function(player) {
         player.contents.hp = player.contents.hp + (hp - player.contents.mhp);
         player.contents.mhp = hp;
     }
+    player.appendMessage("You have risen from level " + initialLevel + " to level " + player.contents.level + ". Press 'z' to see your stats");
 };
