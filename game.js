@@ -116,9 +116,9 @@ Game.getAllObjectsOnXY = function(x, y, objects) {
 
 };
 
-Game.findObjectIndex = function(object, objects) {
+Game.findObjectIndex = function(objectID, objects) {
     for (var a = 0; a < objects.length; a++) {
-        if (objects[a] == object) {
+        if (objects[a].id == objectID) {
             return a;
         }
     }
@@ -178,7 +178,7 @@ Game.findLevel = function(lookingfor, levels) {
 Game.getPlayerIndexSafely = function(name, objectsToSearch) {
     for (var a = 0; a < objectsToSearch.length; a++) {
         try {
-            if (objectsToSearch[a].name == name) {
+            if (objectsToSearch[a].owner == name) {
                 return a;
             }
         } catch(er) {
@@ -186,6 +186,16 @@ Game.getPlayerIndexSafely = function(name, objectsToSearch) {
         }
     }
     return false;
+
+};
+
+Game.erase = function(object) {
+    var lvl = Game.findLevel(object.level, Game.Levels);
+    lvl.objects.splice(Game.findObjectIndex(object.id, lvl.objects), 1);
+    Game.Objects.splice(Game.findObjectIndex(object.id, Game.Objects), 1);
+    if (object.type == "Player") {
+        Game.Players.splice(Game.getPlayerIndexSafely(object.owner, Game.Players), 1);
+    }
 
 };
 
@@ -251,6 +261,14 @@ Game.clearLevels = function(levels) {
     }
 };
 
+Game.listPlayers = function(list) {
+    var out = "";
+    for (var i = 0; i < list.length; i++) {
+        out += list[i].owner + ", ";
+    }
+    return out;
+};
+
 Game.distributeObjects = function(objects, levels) {
     Game.clearLevels(levels);
     for (var i = 0; i < objects.length; i++) {
@@ -312,7 +330,7 @@ Game.moveCreatures = function() {
 };
 
 Game.fight = function(player, creature) {
-    var playerDamage = (player.contents.str * player.contents.weapon[0].atk) / creature.contents.def;
+    var playerDamage = Math.round(Math.random() * 10 * ((player.contents.str * player.contents.weapon[0].atk) / creature.contents.def));
     if (Math.round(Math.random() + (0.01 * player.contents.agi)) == 1) {
         creature.contents.hp -= playerDamage;
         player.appendMessage("You hit the " + creature.name + " for " + playerDamage + " damage.");
@@ -321,12 +339,14 @@ Game.fight = function(player, creature) {
     }
 
     if (creature.contents.hp < 0) {
-        Game.findLevel(creature.level, Game.Levels).objects.splice(Game.findObjectIndex(creature, Game.findLevel(creature.level, Game.Levels).objects), 1);
-        Game.Objects.splice(Game.findObjectIndex(creature, Game.Objects), 1);
-        player.appendMessage("You slay the creature.");
+
+        player.contents.exp += creature.contents.exp;
+        player.appendMessage("You slay the " + creature.name + ".");
+        Game.erase(creature);
+        Game.levelPlayer(player);
         return;
     }
-    var creatureDamage = creature.contents.atk / player.contents.armor[0].def;
+    var creatureDamage = Math.round(Math.random() * 10 * (creature.contents.atk / player.contents.armor[0].def));
     if (Math.round(Math.random() + (0.01 * creature.contents.agi)) == 1) {
         player.contents.hp -= creatureDamage;
         player.appendMessage("The " + creature.name + " hits you for " + creatureDamage + " damage.");
@@ -334,9 +354,8 @@ Game.fight = function(player, creature) {
         player.appendMessage("The " + creature.name + " misses you.");
     }
     if (player.contents.hp < 0) {
-        Game.findLevel(player.level, Game.Levels).objects.splice(Game.findObjectIndex(player, Game.findLevel(player.level, Game.Levels).objects), 1);
-        Game.Objects.splice(Game.findObjectIndex(player, Game.Objects), 1);
-        Game.Players.splice(Game.getPlayerIndexSafely(player.name, Game.Players), 1);
+        console.log(player.owner + " has tragically fallen to the" + creature.name);
+        Game.erase(player);
         return;
     }
 
@@ -358,6 +377,8 @@ Game.generatePlayerStats = function() {
         con : 0,
         hp : 100,
         mhp : 100,
+        level : 1,
+        exp : 0,
         weapon : [weapon],
         armor : [Game.Items.loinCloth]
     };
@@ -401,4 +422,35 @@ Game.stripJSON = function(JSONtoStrip) {
         }
     }
     return output;
+};
+
+Game.levelPlayer = function(player) {
+    while (player.contents.exp > player.contents.level * player.contents.level) {
+        player.contents.level += 1;
+        console.log(player.owner + " is leveling up! He is now level: " + player.contents.level);
+        var points = 2;
+        while (points > 0) {
+            var distribute = Math.round(Math.random() * 1);
+            if (points - distribute > -1) {
+                player.contents.str += distribute;
+                points -= distribute;
+            }
+            distribute = Math.round(Math.random() * 1);
+            if (points - distribute > -1) {
+                player.contents.agi += distribute;
+                points -= distribute;
+            }
+            distribute = Math.round(Math.random() * 1);
+            if (points - distribute > -1) {
+                player.contents.con += distribute;
+                points -= distribute;
+            }
+        }
+        var hp = 100;
+        for (var i = 0; i < player.contents.con; i++) {
+            hp = Math.round(hp * 1.1);
+        }
+        player.contents.hp = player.contents.hp + (hp - player.contents.mhp);
+        player.contents.mhp = hp;
+    }
 };

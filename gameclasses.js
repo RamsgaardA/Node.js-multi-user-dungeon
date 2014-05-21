@@ -6,6 +6,19 @@ Game.Levels = [];
 Game.Players = [];
 Game.Maps = [];
 
+Game.objectID = function(){
+    var idstr = String.fromCharCode(Math.floor((Math.random() * 25) + 65));
+    do {
+        var ascicode = Math.floor((Math.random() * 42) + 48);
+        if (ascicode < 58 || ascicode > 64) {
+            idstr += String.fromCharCode(ascicode);
+        }
+    } while (idstr.length<32);
+    return (idstr);
+};
+
+
+
 Game.Level = function(name, map) {
     this.name = name;
     this.groundLayer = Game.buildMap(map);
@@ -20,6 +33,7 @@ Game.Tile = function(isWalkable, symbol, color) {
 };
 
 Game.GameObject = function(type, symbol, color, isWalkable, contents, func, x, y, level) {
+    this.id = Game.objectID();
     this.type = type;
     this.symbol = symbol;
     this.color = color;
@@ -49,6 +63,7 @@ Game.Armor = function(name, weight, layer, def) {
 };
 
 Game.Stairs = function(symbol, color, leadsto, x, y, level) {
+    this.id = Game.objectID();
     this.type = "Stairs";
     this.symbol = symbol;
     this.color = color;
@@ -65,6 +80,7 @@ Game.Stairs = function(symbol, color, leadsto, x, y, level) {
 };
 
 Game.HostileCreature = function(symbol, name, color, stats, x, y, level) {
+    this.id = Game.objectID();
     this.type = "Creature";
     this.name = name;
     this.symbol = symbol;
@@ -99,6 +115,7 @@ Game.HostileCreature = function(symbol, name, color, stats, x, y, level) {
 };
 
 Game.Player = function(color, owner, contents, x, y) {
+    this.id = Game.objectID();
     this.type = "Player";
     this.symbol = "@";
     this.color = color;

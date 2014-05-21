@@ -24,7 +24,8 @@ var testCreature = new Game.HostileCreature("j", "Jester", "Red", {
     mhp : 20,
     atk : 4,
     def : 2,
-    agi : 1
+    agi : 1,
+    exp : 20
 }, 5, 16, "testLevel0");
 
 var testCreature2 = new Game.HostileCreature("D", "Demon Lord", "Red", {
@@ -32,7 +33,8 @@ var testCreature2 = new Game.HostileCreature("D", "Demon Lord", "Red", {
     mhp : 200,
     atk : 20,
     def : 5,
-    agi : 5
+    agi : 5,
+    exp : 200
 }, 6, 18, "testLevel0");
 
 
@@ -62,6 +64,8 @@ var testPlayer = new Game.Player("#0000ff", "anders", {
     con : 20,
     hp : 200,
     mhp : 200,
+    level : 10,
+    exp : 2000,
     weapon : [Game.Items.ironSword],
     armor : [Game.Items.breastPlate]
 }, 13, 17);
