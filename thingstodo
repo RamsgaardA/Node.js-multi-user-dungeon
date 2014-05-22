@@ -5,7 +5,7 @@ Work on combat algorithm - somewhat done
 ADD ACTUAL CONTENT! - nowhere near done
 
 Python GUI tools - ?!
-Dungeon generating algorithm- not started
+Dungeon generating algorithm - map generator done, not populating with objects.
 
 Armor layer system - not done
 Loot drop system - not done
