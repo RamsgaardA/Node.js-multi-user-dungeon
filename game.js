@@ -314,7 +314,7 @@ Game.spawnPlayer = function(id, startx, starty) {
             x = 0;
         }
     }
-    var newPlayer = new Game.Player('#' + ('00' + (Math.random() * 4096 << 0).toString(16)).substr(-3), id, Game.generatePlayerStats(), x, y);
+    new Game.Player('#' + ('00' + (Math.random() * 4096 << 0).toString(16)).substr(-3), id, Game.generatePlayerStats(), x, y, "testLevel1");
     Game.distributeObjects(Game.Objects, Game.Levels);
 
 };
@@ -354,7 +354,7 @@ Game.fight = function(player, creature) {
         player.appendMessage("The " + creature.name + " misses you.");
     }
     if (player.contents.hp < 0) {
-        console.log(player.owner + " has tragically fallen to the" + creature.name);
+        console.log(player.owner + " has tragically fallen to the " + creature.name);
         Game.erase(player);
         return;
     }
@@ -428,7 +428,6 @@ Game.levelPlayer = function(player) {
     var initialLevel = player.contents.level;
     while (player.contents.exp > player.contents.level * player.contents.level) {
         player.contents.level += 1;
-        console.log(player.owner + " is leveling up! He is now level: " + player.contents.level);
         var points = 2;
         while (points > 0) {
             var distribute = Math.round(Math.random() * 1);
@@ -455,4 +454,5 @@ Game.levelPlayer = function(player) {
         player.contents.mhp = hp;
     }
     player.appendMessage("You have risen from level " + initialLevel + " to level " + player.contents.level + ". Press 'z' to see your stats");
+    console.log(player.owner + " has risen from level " + initialLevel + " to level " + player.contents.level + ".");
 };

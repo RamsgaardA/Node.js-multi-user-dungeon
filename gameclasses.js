@@ -114,7 +114,7 @@ Game.HostileCreature = function(symbol, name, color, stats, x, y, level) {
     Game.Objects.push(this);
 };
 
-Game.Player = function(color, owner, contents, x, y) {
+Game.Player = function(color, owner, contents, x, y, level) {
     this.id = Game.objectID();
     this.type = "Player";
     this.symbol = "@";
@@ -130,7 +130,7 @@ Game.Player = function(color, owner, contents, x, y) {
     this.owner = owner;
     this.x = x;
     this.y = y;
-    this.level = "testLevel1";
+    this.level = level;
     this.messages = [""];
     this.appendMessage = function(msg) {
         if (this.messages.length < 5) {
