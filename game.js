@@ -285,7 +285,7 @@ Game.buildMap = function(map) {
     var finishedMap = [];
     for (var i = 0; i < map.length; i++) {
         finishedMap.push([]);
-        for (var x = 0; x < map[i].length; x++) {0
+        for (var x = 0; x < map[i].length; x++) {
             if (map[i][x] == 0) {
                 finishedMap[i].push(Game.Tiles.groundTile);
             } else if (map[i][x] == 1) {
