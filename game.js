@@ -329,12 +329,12 @@ Game.moveCreatures = function() {
     }
 };
 
-Game.sumDefense = function(player){
-	var sum = 0;
-	for(var i = 0; i < player.contents.armor.length; i++){
-		sum += player.contents.armor[i].def;
-	}
-	return sum;
+Game.sumDefense = function(player) {
+    var sum = 0;
+    for (var i = 0; i < player.contents.armor.length; i++) {
+        sum += player.contents.armor[i].def;
+    }
+    return sum;
 };
 
 Game.fight = function(player, creature) {
@@ -461,8 +461,8 @@ Game.levelPlayer = function(player) {
         player.contents.hp = player.contents.hp + (hp - player.contents.mhp);
         player.contents.mhp = hp;
     }
-    if(player.contents.level > initialLevel){
-    player.appendMessage("You have risen from level " + initialLevel + " to level " + player.contents.level + ". Press 'z' to see your stats");
-    console.log(player.owner + " has risen from level " + initialLevel + " to level " + player.contents.level + ".");
+    if (player.contents.level > initialLevel) {
+        player.appendMessage("You have risen from level " + initialLevel + " to level " + player.contents.level + ". Press 'z' to see your stats");
+        console.log(player.owner + " has risen from level " + initialLevel + " to level " + player.contents.level + ".");
     }
 };
