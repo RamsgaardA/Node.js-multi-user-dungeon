@@ -1,7 +1,7 @@
 Game.Tiles.groundTile = new Game.Tile(true, "_", "Brown");
 Game.Tiles.wallTile = new Game.Tile(false, "#", "Black");
 Game.Tiles.indoorTile = new Game.Tile(true, "_", "Black");
-Game.Tiles.centerTile = new Game.Tile(true, "#", "Grey");
+Game.Tiles.centerTile = new Game.Tile(false, "#", "Grey");
 Game.Tiles.nullTile = new Game.Tile(false, "?", "White");
 
 Game.Items.sharpStick = new Game.Weapon("Sharp Stick", 1, 1);
@@ -64,15 +64,15 @@ new Game.GameObject("Equpiment", "c", "Yellow", false, {}, function(actor) {
 
 }, 20, 20, "testLevel1");
 
-new Game.Stairs("<", "Brown", "testLevel1", 14, 12, "testLevel0");
+new Game.Stairs("<", "Brown", "testLevel1", 14, 13, "testLevel0");
 
 new Game.Stairs("<", "Green", "testLevel2", 24, 10, "testLevel1");
 
-new Game.Stairs(">", "Brown", "testLevel0", 14, 12, "testLevel1");
+new Game.Stairs(">", "Brown", "testLevel0", 14, 13, "testLevel1");
 
 new Game.Stairs(">", "Green", "testLevel1", 24, 10, "testLevel2");
 
-new Game.Level("testLevel0", Game.makeDungeon(64));
+new Game.Level("testLevel0", Game.Maps[0]);
 
 new Game.Level("testLevel1", Game.Maps[1]);
 

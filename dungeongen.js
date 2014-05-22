@@ -151,7 +151,24 @@ Game.makeDungeon = function(size) {
 
         return false;
     };
+    this.Convert = function(map) {
+        var newmap = [];
+        for (var y = 0; y < map.length; y++) {
+            newmap.push([]);
+            for (var x = 0; x < map[y].length; x++) {
+                if (map[y][x] == 1) {
+                    newmap[y].push(0);
+                } else if (map[y][x] == 0) {
+                    newmap[y].push(1);
+                } else {
+                    newmap[y].push(map[y][x]);
+                }
+
+            }
+        }
+        return newmap;
+    };
     this.Generate();
-    return this.map;
+    return this.Convert(this.map);
 };
 
