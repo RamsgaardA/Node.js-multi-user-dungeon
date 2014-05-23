@@ -4,6 +4,8 @@ var Helpers = {
     }
 };
 
+//Game.makeDungeon is based on code from http://bigbadwofl.me/random-dungeon-generator/
+
 Game.makeDungeon = function(size) {
     this.map = null;
     this.map_size = size;
