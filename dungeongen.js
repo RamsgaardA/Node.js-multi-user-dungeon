@@ -1,4 +1,4 @@
-var Helpers = {
+Helpers = {
     GetRandom : function(low, high) {
         return Math.round((Math.random() * (high - low)) + low);
     }
@@ -119,7 +119,7 @@ Game.makeDungeon = function(size) {
         return closest;
     };
     this.SquashRooms = function() {
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 5; i++) {
             for (var j = 0; j < this.rooms.length; j++) {
                 var room = this.rooms[j];
                 while (true) {
@@ -174,24 +174,27 @@ Game.makeDungeon = function(size) {
     return this.Convert(this.map);
 };
 
-Game.populateDungeons = function(levels){
-	for(var i = 0; i < levels.length - 1; i++){
-	console.log("Attempting to link levels");
-		var max = levels[i].groundLayer[0].length;
-		var x = Helpers.GetRandom(1, max);
-		var y = Helpers.GetRandom(1, max);
-		if(Game.checktile(x, y, levels[i])){
-			console.log("Level clear");
-			if(Game.checktile(x, y, levels[i+1])){
-			console.log("Next level also clear, creating stair pair");
-			new Game.Stairs("<", "Blue", levels[i+1].name, x,y, levels[i].name);
-			new Game.Stairs(">", "Blue", levels[i].name, x,y, levels[i+1].name);
-			console.log(levels[i].name + " and on level " + levels[i+1].name + " Stairs are found at X:" + x + " Y:" + y );
-			} else {
-			i--;
-			}
-		} else {
-		i--;
-		}	
-	}
+Game.populateDungeons = function(levels) {
+    for (var i = 0; i < levels.length - 1; i++) {
+        var max = levels[i].groundLayer[0].length;
+        var x = Helpers.GetRandom(1, max);
+        var y = Helpers.GetRandom(1, max);
+        if (Game.checktile(x, y, levels[i])) {
+            if (Game.checktile(x, y, levels[i + 1])) {
+                new Game.Stairs("<", "Blue", levels[i + 1].name, x, y, levels[i].name);
+                new Game.Stairs(">", "Blue", levels[i].name, x, y, levels[i + 1].name);
+                console.log(levels[i].name + " to " + levels[i + 1].name + " Stairs are found at X:" + x + " Y:" + y);
+            } else {
+                i--;
+            }
+        } else {
+            i--;
+        }
+    }
+    for (var i = 0; i < levels.length - 1; i++){
+        for(var x = 0; x < 5; x++){
+            Game.spawnCreature(levels[i]);
+        }
+    }
+    
 };

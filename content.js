@@ -14,11 +14,17 @@ Game.Items.breastPlate = new Game.Armor("Iron Breast Plate", 3, 2, 10);
 
 
 
-new Game.Level("testLevel0", Game.makeDungeon(64));
+new Game.Level("Level0", Game.makeDungeon(64), 1);
 
-new Game.Level("testLevel1", Game.makeDungeon(64));
+new Game.Level("Level1", Game.makeDungeon(64), 2);
 
-new Game.Level("testLevel2", Game.makeDungeon(64));
+new Game.Level("Level2", Game.makeDungeon(64), 3);
+
+new Game.Level("Level3", Game.makeDungeon(64), 4);
+
+new Game.Level("Level4", Game.makeDungeon(64), 4);
+
+new Game.Level("Level5", Game.makeDungeon(64), 5);
 
 Game.populateDungeons(Game.Levels);
 

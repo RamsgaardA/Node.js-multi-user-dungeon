@@ -1,10 +1,12 @@
 Game = {};
 Game.Tiles = {};
 Game.Items = {};
+Game.CreatureTemplates = {};
 Game.Objects = [];
 Game.Levels = [];
 Game.Players = [];
 Game.Maps = [];
+Game.Creatures = [];
 
 Game.objectID = function(){
     var idstr = String.fromCharCode(Math.floor((Math.random() * 25) + 65));
@@ -19,8 +21,9 @@ Game.objectID = function(){
 
 
 
-Game.Level = function(name, map) {
+Game.Level = function(name, map, difficulty) {
     this.name = name;
+    this.difficulty = difficulty;
     this.groundLayer = Game.buildMap(map);
     this.objects = [];
     Game.Levels.push(this);
@@ -112,6 +115,7 @@ Game.HostileCreature = function(symbol, name, color, stats, x, y, level) {
         }
     };
     Game.Objects.push(this);
+    Game.Creatures.push(this);
 };
 
 Game.Player = function(color, owner, contents, x, y, level) {

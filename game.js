@@ -237,13 +237,20 @@ Game.makeSnap = function(player) {
                 var objectsToProcess = Game.getAllObjectsOnXY(x, y, level.objects);
                 for (var abc = 0; abc < objectsToProcess.length; abc++) {
                     var processedObject = JSON.parse(JSON.stringify(objectsToProcess[abc]));
-                    processedObject.x = ox;
-                    processedObject.y = oy;
+
                     if (processedObject.type == "Player") {
                         if (processedObject.owner != player.owner) {
                             processedObject.owner = "";
+
+                        } else {
+                            processedObject.trueX = processedObject.x;
+                            processedObject.trueY = processedObject.y;
                         }
+
                     }
+
+                    processedObject.x = ox;
+                    processedObject.y = oy;
                     newSnap.objects.push(processedObject);
                 }
             }
@@ -306,7 +313,7 @@ Game.buildMap = function(map) {
 Game.spawnPlayer = function(id, startx, starty) {
     var x = startx;
     var y = starty;
-    while (!Game.checktile(x, y, Game.Levels[1])) {
+    while (!Game.checktile(x, y, Game.Levels[0])) {
         if (x < Game.Levels[1].groundLayer[0].length - 1) {
             x++;
         } else if (y < Game.Levels[1].groundLayer.length - 1) {
@@ -314,17 +321,15 @@ Game.spawnPlayer = function(id, startx, starty) {
             x = 0;
         }
     }
-    new Game.Player('#' + ('00' + (Math.random() * 4096 << 0).toString(16)).substr(-3), id, Game.generatePlayerStats(), x, y, "testLevel1");
+    new Game.Player('#' + ('00' + (Math.random() * 4096 << 0).toString(16)).substr(-3), id, Game.generatePlayerStats(), x, y, "Level0");
     Game.distributeObjects(Game.Objects, Game.Levels);
 
 };
 
 Game.moveCreatures = function() {
-    for (var i = 0; i < Game.Objects.length; i++) {
-        if (Game.Objects[i].type == "Creature") {
-            if (Game.Objects[i].move) {
-                Game.Objects[i].move();
-            }
+    for (var i = 0; i < Game.Creatures.length; i++) {
+        if (Game.Creatures[i].move) {
+            Game.Creatures[i].move();
         }
     }
 };
@@ -464,5 +469,18 @@ Game.levelPlayer = function(player) {
     if (player.contents.level > initialLevel) {
         player.appendMessage("You have risen from level " + initialLevel + " to level " + player.contents.level + ". Press 'z' to see your stats");
         console.log(player.owner + " has risen from level " + initialLevel + " to level " + player.contents.level + ".");
+    }
+};
+
+Game.spawnCreature = function(level) {
+    for (var i = 0; i < 1; i++) {
+        var max = level.groundLayer[0].length;
+        var x = Helpers.GetRandom(1, max);
+        var y = Helpers.GetRandom(1, max);
+        if (Game.checktile(x, y, level)) {
+            new Game.CreatureTemplates.Rat(x, y, level.name);
+        } else {
+            i--;
+        }
     }
 };

@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var gameclasses = require('./gameclasses.js');
+var creatureclasses = require('./creatureTemplates.js');
 var dungeongen = require('./dungeongen.js');
 var game = require('./game.js');
 var gamecontent = require('./content.js');
