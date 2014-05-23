@@ -3,7 +3,6 @@ var app = express();
 var gameclasses = require('./gameclasses.js');
 var dungeongen = require('./dungeongen.js');
 var game = require('./game.js');
-var maps = require('./maps.js');
 var gamecontent = require('./content.js');
 
 /* serves main page */
