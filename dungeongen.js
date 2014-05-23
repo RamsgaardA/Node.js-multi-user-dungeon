@@ -184,7 +184,7 @@ Game.populateDungeons = function(levels){
 			console.log("Next level also clear, creating stair pair");
 			new Game.Stairs("<", "Blue", levels[i+1].name, x,y, levels[i].name);
 			new Game.Stairs(">", "Blue", levels[i].name, x,y, levels[i+1].name);
-			console.log(levels[i].name + " and on level " + levels[i+1].name + " Stairs are found at X:" + x + " Y:" + y )
+			console.log(levels[i].name + " and on level " + levels[i+1].name + " Stairs are found at X:" + x + " Y:" + y );
 			} else {
 			i--;
 			}
