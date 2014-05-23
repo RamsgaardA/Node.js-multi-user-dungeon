@@ -20,6 +20,6 @@ new Game.Level("testLevel1", Game.makeDungeon(64));
 
 new Game.Level("testLevel2", Game.makeDungeon(64));
 
-Game.populateDungeons(Game.Levels)
+Game.populateDungeons(Game.Levels);
 
 Game.distributeObjects(Game.Objects, Game.Levels);
