@@ -1,7 +1,7 @@
 Game.Tiles.groundTile = new Game.Tile(true, "_", "Brown");
 Game.Tiles.wallTile = new Game.Tile(false, "#", "Black");
 Game.Tiles.indoorTile = new Game.Tile(true, "_", "Black");
-Game.Tiles.centerTile = new Game.Tile(false, "#", "Grey");
+Game.Tiles.innerWallTile = new Game.Tile(false, "#", "Grey");
 Game.Tiles.nullTile = new Game.Tile(false, "?", "White");
 
 Game.Items.sharpStick = new Game.Weapon("Sharp Stick", 1, 1);

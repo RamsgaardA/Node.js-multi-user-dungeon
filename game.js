@@ -298,7 +298,7 @@ Game.buildMap = function(map) {
             } else if (map[i][x] == 1) {
                 finishedMap[i].push(Game.Tiles.wallTile);
             } else if (map[i][x] == 2) {
-                finishedMap[i].push(Game.Tiles.centerTile);
+                finishedMap[i].push(Game.Tiles.innerWallTile);
             } else if (map[i][x] == 3) {
                 finishedMap[i].push(Game.Tiles.indoorTile);
             } else {

@@ -12,10 +12,10 @@ Client.Render = function(snapshot) {
     var x = 0;
     var y = 0;
     //calculate and set spacing between characters
-    var xspacing = (width / snapshot.groundLayer.length) - 5;
-    var yspacing = (height / snapshot.groundLayer[0].length) - 5;
+    var xspacing = (width / snapshot.groundLayer.length);
+    var yspacing = (height / snapshot.groundLayer[0].length);
     // Clear the canvas before drawing the next frame
-    ctx.clearRect(x, y, 400, 400);
+    ctx.clearRect(x, y, canvas.width, canvas.height);
     //set the font
     ctx.font = xspacing + "px Courier";
     //iterate through the snapshot tiles
