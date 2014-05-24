@@ -10,8 +10,10 @@ Game.makeDungeon = function(size) {
     this.map = null;
     this.map_size = size;
     this.rooms = [];
+    this.floorTileCount = 0;
     this.Generate = function() {
         this.map = [];
+        this.rooms = [];
         for (var x = 0; x < this.map_size; x++) {
             this.map[x] = [];
             for (var y = 0; y < this.map_size; y++) {
@@ -40,8 +42,6 @@ Game.makeDungeon = function(size) {
 
             this.rooms.push(room);
         }
-
-        this.SquashRooms();
 
         for ( i = 0; i < room_count; i++) {
             var roomA = this.rooms[i];
@@ -94,6 +94,11 @@ Game.makeDungeon = function(size) {
                 }
             }
         }
+        this.isConnected();
+        if(this.countTiles() != 0){
+            this.Generate();
+        }
+        
     };
     this.FindClosestRoom = function(room) {
         var mid = {
@@ -118,30 +123,6 @@ Game.makeDungeon = function(size) {
         }
         return closest;
     };
-    this.SquashRooms = function() {
-        for (var i = 0; i < 5; i++) {
-            for (var j = 0; j < this.rooms.length; j++) {
-                var room = this.rooms[j];
-                while (true) {
-                    var old_position = {
-                        x : room.x,
-                        y : room.y
-                    };
-                    if (room.x > 1)
-                        room.x--;
-                    if (room.y > 1)
-                        room.y--;
-                    if ((room.x == 1) && (room.y == 1))
-                        break;
-                    if (this.DoesCollide(room, j)) {
-                        room.x = old_position.x;
-                        room.y = old_position.y;
-                        break;
-                    }
-                }
-            }
-        }
-    };
     this.DoesCollide = function(room, ignore) {
         for (var i = 0; i < this.rooms.length; i++) {
             if (i == ignore)
@@ -162,6 +143,8 @@ Game.makeDungeon = function(size) {
                     newmap[y].push(0);
                 } else if (map[y][x] == 0) {
                     newmap[y].push(1);
+                } else if (map[y][x] == 5) {
+                    newmap[y].push(0);
                 } else {
                     newmap[y].push(map[y][x]);
                 }
@@ -169,6 +152,42 @@ Game.makeDungeon = function(size) {
             }
         }
         return newmap;
+    };
+    this.countTiles = function() {
+        var tilecount = 0;
+        for (var y = 0; y < this.map.length; y++) {
+            for (var x = 0; x < this.map[y].length; x++) {
+                if (this.map[y][x] == 1) {
+                    tilecount++;
+                }
+            }
+        }
+        return tilecount;
+    };
+    this.exploreAdjacent = function(x, y) {
+        this.map[y][x] = 5;
+        if(this.map[y][x+1] == 1){
+            this.exploreAdjacent(x+1, y);
+        }
+        if(this.map[y][x-1] == 1){
+            this.exploreAdjacent(x-1, y);
+        }
+        if(this.map[y+1][x] == 1){
+            this.exploreAdjacent(x, y+1);
+        }
+        if(this.map[y-1][x] == 1){
+            this.exploreAdjacent(x, y-1);
+        }
+    };
+    this.isConnected = function(){
+        for (var y = 0; y < this.map.length; y++) {
+            for (var x = 0; x < this.map[y].length; x++) {
+                if (this.map[y][x] == 1) {
+                    this.exploreAdjacent(x, y);
+                    return;
+                }
+            }
+        }
     };
     this.Generate();
     return this.Convert(this.map);
@@ -191,10 +210,10 @@ Game.populateDungeons = function(levels) {
             i--;
         }
     }
-    for (var i = 0; i < levels.length - 1; i++){
-        for(var x = 0; x < 5; x++){
+    for (var i = 0; i < levels.length - 1; i++) {
+        for (var x = 0; x < 5; x++) {
             Game.spawnCreature(levels[i]);
         }
     }
-    
-};
+
+}; 
