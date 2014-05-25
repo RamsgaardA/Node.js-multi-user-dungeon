@@ -26,6 +26,7 @@ new Game.Level("Level4", Game.makeDungeon(64), 4);
 
 new Game.Level("Level5", Game.makeDungeon(64), 5);
 
+
 Game.populateDungeons(Game.Levels);
 
 Game.distributeObjects(Game.Objects, Game.Levels);

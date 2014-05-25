@@ -44,6 +44,52 @@ Game.CreatureTemplates.Rat = function(x, y, level) {
     Game.Creatures.push(this);
 };
 
+Game.CreatureTemplates.Beetle = function(x, y, level) {
+    this.id = Game.objectID();
+    this.type = "Creature";
+    this.name = "Beetle";
+    this.symbol = "b";
+    this.color = "Grey";
+    this.isWalkable = false;
+    
+    this.contents = {
+        difficulty : 1,
+        hp : 5,
+        mhp : 5,
+        atk : 1,
+        def : 5,
+        agi : 1,
+        exp : 5
+    };
+    
+    this.func = function(actor) {
+        Game.fight(actor, this);
+    };
+    this.x = x;
+    this.y = y;
+    this.level = level;
+    this.move = function() {
+        var fx = Math.round(Math.random());
+        var bx = Math.round(Math.random());
+        var fy = Math.round(Math.random());
+        var by = Math.round(Math.random());
+
+        if (Math.round(Math.random()) == 1) {
+            if (Game.checktile(this.x + fx - bx, this.y, Game.findLevel(this.level, Game.Levels))) {
+                this.x += fx;
+                this.x -= bx;
+            }
+        } else {
+            if (Game.checktile(this.x, this.y + fy - by, Game.findLevel(this.level, Game.Levels))) {
+                this.y += fy;
+                this.y -= by;
+            }
+        }
+    };
+    Game.Objects.push(this);
+    Game.Creatures.push(this);
+};
+
 Game.CreatureTemplates.Bat = function(x, y, level) {
     this.id = Game.objectID();
     this.type = "Creature";
@@ -90,6 +136,52 @@ Game.CreatureTemplates.Bat = function(x, y, level) {
     Game.Creatures.push(this);
 };
 
+Game.CreatureTemplates.Turtle = function(x, y, level) {
+    this.id = Game.objectID();
+    this.type = "Creature";
+    this.name = "Turtle";
+    this.symbol = "t";
+    this.color = "Green";
+    this.isWalkable = false;
+    
+    this.contents = {
+        difficulty : 3,
+        hp : 30,
+        mhp : 30,
+        atk : 1,
+        def : 6,
+        agi : 1,
+        exp : 20
+    };
+    
+    this.func = function(actor) {
+        Game.fight(actor, this);
+    };
+    this.x = x;
+    this.y = y;
+    this.level = level;
+    this.move = function() {
+        var fx = Math.round(Math.random());
+        var bx = Math.round(Math.random());
+        var fy = Math.round(Math.random());
+        var by = Math.round(Math.random());
+
+        if (Math.round(Math.random()) == 1) {
+            if (Game.checktile(this.x + fx - bx, this.y, Game.findLevel(this.level, Game.Levels))) {
+                this.x += fx;
+                this.x -= bx;
+            }
+        } else {
+            if (Game.checktile(this.x, this.y + fy - by, Game.findLevel(this.level, Game.Levels))) {
+                this.y += fy;
+                this.y -= by;
+            }
+        }
+    };
+    Game.Objects.push(this);
+    Game.Creatures.push(this);
+};
+
 Game.CreatureTemplates.LargeRat = function(x, y, level) {
     this.id = Game.objectID();
     this.type = "Creature";
@@ -106,6 +198,98 @@ Game.CreatureTemplates.LargeRat = function(x, y, level) {
         def : 3,
         agi : 2,
         exp : 25
+    };
+    
+    this.func = function(actor) {
+        Game.fight(actor, this);
+    };
+    this.x = x;
+    this.y = y;
+    this.level = level;
+    this.move = function() {
+        var fx = Math.round(Math.random());
+        var bx = Math.round(Math.random());
+        var fy = Math.round(Math.random());
+        var by = Math.round(Math.random());
+
+        if (Math.round(Math.random()) == 1) {
+            if (Game.checktile(this.x + fx - bx, this.y, Game.findLevel(this.level, Game.Levels))) {
+                this.x += fx;
+                this.x -= bx;
+            }
+        } else {
+            if (Game.checktile(this.x, this.y + fy - by, Game.findLevel(this.level, Game.Levels))) {
+                this.y += fy;
+                this.y -= by;
+            }
+        }
+    };
+    Game.Objects.push(this);
+    Game.Creatures.push(this);
+};
+
+Game.CreatureTemplates.Jester = function(x, y, level) {
+    this.id = Game.objectID();
+    this.type = "Creature";
+    this.name = "Jester";
+    this.symbol = "J";
+    this.color = "Red";
+    this.isWalkable = false;
+    
+    this.contents = {
+        difficulty : 5,
+        hp : 60,
+        mhp : 60,
+        atk : 8,
+        def : 5,
+        agi : 5,
+        exp : 50
+    };
+    
+    this.func = function(actor) {
+        Game.fight(actor, this);
+    };
+    this.x = x;
+    this.y = y;
+    this.level = level;
+    this.move = function() {
+        var fx = Math.round(Math.random());
+        var bx = Math.round(Math.random());
+        var fy = Math.round(Math.random());
+        var by = Math.round(Math.random());
+
+        if (Math.round(Math.random()) == 1) {
+            if (Game.checktile(this.x + fx - bx, this.y, Game.findLevel(this.level, Game.Levels))) {
+                this.x += fx;
+                this.x -= bx;
+            }
+        } else {
+            if (Game.checktile(this.x, this.y + fy - by, Game.findLevel(this.level, Game.Levels))) {
+                this.y += fy;
+                this.y -= by;
+            }
+        }
+    };
+    Game.Objects.push(this);
+    Game.Creatures.push(this);
+};
+
+Game.CreatureTemplates.MinorDragon = function(x, y, level) {
+    this.id = Game.objectID();
+    this.type = "Creature";
+    this.name = "Small Dragon";
+    this.symbol = "d";
+    this.color = "Green";
+    this.isWalkable = false;
+    
+    this.contents = {
+        difficulty : 6,
+        hp : 80,
+        mhp : 80,
+        atk : 10,
+        def : 6,
+        agi : 6,
+        exp : 70
     };
     
     this.func = function(actor) {

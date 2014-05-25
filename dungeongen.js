@@ -95,10 +95,10 @@ Game.makeDungeon = function(size) {
             }
         }
         this.isConnected();
-        if(this.countTiles() != 0){
+        if (this.countTiles() != 0) {
             this.Generate();
         }
-        
+
     };
     this.FindClosestRoom = function(room) {
         var mid = {
@@ -166,20 +166,20 @@ Game.makeDungeon = function(size) {
     };
     this.exploreAdjacent = function(x, y) {
         this.map[y][x] = 5;
-        if(this.map[y][x+1] == 1){
-            this.exploreAdjacent(x+1, y);
+        if (this.map[y][x + 1] == 1) {
+            this.exploreAdjacent(x + 1, y);
         }
-        if(this.map[y][x-1] == 1){
-            this.exploreAdjacent(x-1, y);
+        if (this.map[y][x - 1] == 1) {
+            this.exploreAdjacent(x - 1, y);
         }
-        if(this.map[y+1][x] == 1){
-            this.exploreAdjacent(x, y+1);
+        if (this.map[y+1][x] == 1) {
+            this.exploreAdjacent(x, y + 1);
         }
-        if(this.map[y-1][x] == 1){
-            this.exploreAdjacent(x, y-1);
+        if (this.map[y-1][x] == 1) {
+            this.exploreAdjacent(x, y - 1);
         }
     };
-    this.isConnected = function(){
+    this.isConnected = function() {
         for (var y = 0; y < this.map.length; y++) {
             for (var x = 0; x < this.map[y].length; x++) {
                 if (this.map[y][x] == 1) {
@@ -216,4 +216,94 @@ Game.populateDungeons = function(levels) {
         }
     }
 
-}; 
+};
+
+Game.spawnCreature = function(level) {
+    var diff = level.difficulty;
+    var roll = Helpers.GetRandom(1, 100);
+
+    if (diff == 1) {
+        if (roll <= 65) {
+            Game.spawnLevel1Creature(level);
+        } else if (roll <= 85) {
+            Game.spawnLevel2Creature(level);
+        } else {
+            Game.spawnLevel3Creature(level);
+        }
+    }
+
+    if (diff == 2) {
+        if (roll <= 35) {
+            Game.spawnLevel1Creature(level);
+        } else if (roll <= 65) {
+            Game.spawnLevel2Creature(level);
+        } else if (roll <= 85) {
+            Game.spawnLevel3Creature(level);
+        } else {
+            Game.spawnLevel4Creature(level);
+        }
+    }
+
+    if (diff == 3) {
+        if (roll <= 15) {
+            Game.spawnLevel1Creature(level);
+        } else if (roll <= 35) {
+            Game.spawnLevel2Creature(level);
+        } else if (roll <= 65) {
+            Game.spawnLevel3Creature(level);
+        } else if (roll <= 85) {
+            Game.spawnLevel4Creature(level);
+        } else {
+            Game.spawnLevel5Creature(level);
+        }
+    }
+
+    if (diff == 4) {
+        if (roll <= 15) {
+            Game.spawnLevel2Creature(level);
+        } else if (roll <= 35) {
+            Game.spawnLevel3Creature(level);
+        } else if (roll <= 65) {
+            Game.spawnLevel4Creature(level);
+        } else if (roll <= 85) {
+            Game.spawnLevel5Creature(level);
+        } else {
+            Game.spawnLevel6Creature(level);
+        }
+    }
+
+};
+
+Game.spawnLevel1Creature = function(level) {
+    var xy = Game.getRandomClearXY(level);
+    if (Helpers.GetRandom(0,1) == 1) {
+        new Game.CreatureTemplates.Rat(xy.x, xy.y, level.name);
+    } else {
+        new Game.CreatureTemplates.Beetle(xy.x, xy.y, level.name);
+    }
+};
+
+Game.spawnLevel2Creature = function(level) {
+    var xy = Game.getRandomClearXY(level);
+    new Game.CreatureTemplates.Bat(xy.x, xy.y, level.name);
+};
+
+Game.spawnLevel3Creature = function(level) {
+    var xy = Game.getRandomClearXY(level);
+    new Game.CreatureTemplates.Turtle(xy.x, xy.y, level.name);
+};
+
+Game.spawnLevel4Creature = function(level) {
+    var xy = Game.getRandomClearXY(level);
+    new Game.CreatureTemplates.LargeRat(xy.x, xy.y, level.name);
+};
+
+Game.spawnLevel5Creature = function(level) {
+    var xy = Game.getRandomClearXY(level);
+    new Game.CreatureTemplates.Jester(xy.x, xy.y, level.name);
+};
+
+Game.spawnLevel6Creature = function(level) {
+    var xy = Game.getRandomClearXY(level);
+    new Game.CreatureTemplates.MinorDragon(xy.x, xy.y, level.name);
+};

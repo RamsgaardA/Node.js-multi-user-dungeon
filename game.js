@@ -310,18 +310,9 @@ Game.buildMap = function(map) {
     return finishedMap;
 };
 
-Game.spawnPlayer = function(id, startx, starty) {
-    var x = startx;
-    var y = starty;
-    while (!Game.checktile(x, y, Game.Levels[0])) {
-        if (x < Game.Levels[1].groundLayer[0].length - 1) {
-            x++;
-        } else if (y < Game.Levels[1].groundLayer.length - 1) {
-            y++;
-            x = 0;
-        }
-    }
-    new Game.Player('#' + ('00' + (Math.random() * 4096 << 0).toString(16)).substr(-3), id, Game.generatePlayerStats(), x, y, "Level0");
+Game.spawnPlayer = function(id) {
+    xy = Game.getRandomClearXY(Game.Levels[0]);
+    new Game.Player('#' + ('00' + (Math.random() * 4096 << 0).toString(16)).substr(-3), id, Game.generatePlayerStats(), xy.x, xy.y, "Level0");
     Game.distributeObjects(Game.Objects, Game.Levels);
 
 };
@@ -472,13 +463,16 @@ Game.levelPlayer = function(player) {
     }
 };
 
-Game.spawnCreature = function(level) {
+Game.getRandomClearXY = function(level) {
     for (var i = 0; i < 1; i++) {
         var max = level.groundLayer[0].length;
         var x = Helpers.GetRandom(1, max);
         var y = Helpers.GetRandom(1, max);
         if (Game.checktile(x, y, level)) {
-            new Game.CreatureTemplates.Rat(x, y, level.name);
+            return {
+                x : x,
+                y : y
+            };
         } else {
             i--;
         }

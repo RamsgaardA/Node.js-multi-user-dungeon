@@ -48,7 +48,7 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('StartGame', function() {
         id = uniqueid();
-        Game.spawnPlayer(id, 15, 15);
+        Game.spawnPlayer(id);
         socket.emit('welcome', {
             snapshot : Game.makeSnap(id),
             id : id
