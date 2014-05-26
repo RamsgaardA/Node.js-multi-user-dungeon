@@ -27,6 +27,15 @@ Client.Render = function(snapshot) {
                 var objectToRender = Client.Render.checkObjects(snapshot.objects, ix, iy);
                 ctx.fillStyle = objectToRender.color;
                 ctx.fillText(objectToRender.symbol, x + 22, y + 22);
+                //if the option "Show Object Names" is checked, show object types and creature names
+                if (document.getElementById("nameoption").checked == true) {
+                    ctx.font = xspacing / 2 + "px Courier";
+                    ctx.fillText(objectToRender.type, x - (objectToRender.type.length * xspacing / 2) / 4 + 25, y - 5);
+                    if (objectToRender.type == "Creature") {
+                        ctx.fillText(objectToRender.name, x - (objectToRender.name.length * xspacing / 2) / 4 + 25, y + 40);
+                    }
+                    ctx.font = xspacing + "px Courier";
+                }
 
             } else {
                 //There was no object, render the groundtile.

@@ -27,11 +27,12 @@
 				top: 80%;
 				margin-left: -200px;
 			}
-			#stats{
+			#stats {
 				position: fixed;
 				left: 50%;
 				top: 50%;
 				margin-left: -200px;
+				margin-top: +100px;
 			}
 		</style>
 	</head>
@@ -42,37 +43,37 @@
 		<div id="console">
 			Console:
 		</div>
-		<div id="stats">
-		</div>
+		<div id="stats"></div>
 		<canvas id="Canvas" height="400" width="400">
 			Canvas
 		</canvas>
 		<br>
 		<div id="inputs">
-		<input type="submit" value="Start New Game" onclick="
-		socket.emit('StartGame');
-		">
-		<br>
-		<div id="session">
-			Session ID: *None, start a game or restore a session*
-		</div>
+			<input type="submit" value="Start New Game" onclick="
+			socket.emit('StartGame');
+			">
+			<br>
+			Display Object Names <input id="nameoption" type="checkbox"> 
+			<div id="session">
+				Session ID: *None, start a game or restore a session*
+			</div>
 
-		<br>
-		<input type="text" id="sessioninput">
-		<input type="submit" value="Restore session" onclick="
-		Client.owner = document.getElementById('sessioninput').value;
-		document.getElementById('session').innerHTML = 'Session ID: '  + Client.owner;
-		socket.emit('changeid', {
-		newid : Client.owner
-		});
-		">
-		<br>
-		<input type="text" id="chatinput">
-		<input type="submit" value="Chat" onclick="
-		socket.emit('chat', {
-		chatMessage : document.getElementById('chatinput').value
-		});
-		">
+			<br>
+			<input type="text" id="sessioninput">
+			<input type="submit" value="Restore session" onclick="
+			Client.owner = document.getElementById('sessioninput').value;
+			document.getElementById('session').innerHTML = 'Session ID: ' + Client.owner;
+			socket.emit('changeid', {
+			newid : Client.owner
+			});
+			">
+			<br>
+			<input type="text" id="chatinput">
+			<input type="submit" value="Chat" onclick="
+			socket.emit('chat', {
+			chatMessage : document.getElementById('chatinput').value
+			});
+			"><br>
 		</div>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="main.js"></script>
