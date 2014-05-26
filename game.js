@@ -11,6 +11,26 @@ Game.update = function() {
 
 };
 
+Game.moveRandomly = function() {
+    var fx = Math.round(Math.random());
+    var bx = Math.round(Math.random());
+    var fy = Math.round(Math.random());
+    var by = Math.round(Math.random());
+
+    if (Math.round(Math.random()) == 1) {
+        if (Game.checktile(this.x + fx - bx, this.y, Game.findLevel(this.level, Game.Levels))) {
+            this.x += fx;
+            this.x -= bx;
+        }
+    } else {
+        if (Game.checktile(this.x, this.y + fy - by, Game.findLevel(this.level, Game.Levels))) {
+            this.y += fy;
+            this.y -= by;
+        }
+    }
+
+};
+
 Game.move = function(direction, player) {
     if (Game.checkPlayer(Game.Players, player)) {
         var actualPlayer = Game.checkPlayer(Game.Players, player);
@@ -477,4 +497,4 @@ Game.getRandomClearXY = function(level) {
             i--;
         }
     }
-};
+}; 
