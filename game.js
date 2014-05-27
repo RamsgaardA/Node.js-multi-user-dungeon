@@ -222,28 +222,32 @@ Game.erase = function(object) {
 
 };
 
-Game.isPlayerNear = function(player) {
+Game.getNearbyPlayers = function(player) {
 	if (Game.findLevel(player.level, Game.Levels)) {
 		var level = Game.findLevel(player.level, Game.Levels);
 	} else {
 		console.log("ERROR, could not find level " + player.level);
 		return false;
 	}
-	for (var iy = player.y - 5; iy < player.y + 6; iy++) {
-		for (var ix = player.x - 5; ix < player.x + 6; ix++) {
+	for (var iy = player.y - 6; iy < player.y + 7; iy++) {
+		var pout = [];
+		for (var ix = player.x - 6; ix < player.x + 7; ix++) {
 			if (Game.doesTileExist(ix, iy, level.groundLayer)) {
 				if (Game.checkObjects(ix, iy, level.objects)) {
 					var objects = Game.getAllObjectsOnXY(ix, iy, level.objects);
 					for (var i = 0; i < objects.length; i++) {
 						if (objects[i].type == "Player") {
 							if (objects[i].owner != player.owner) {
-								return objects[i];
+								pout += objects[i];
 							}
 						}
 					}
 				}
 			}
 		}
+	}
+	if(pout.length > 0){
+	return pout;
 	}
 	return false;
 };
