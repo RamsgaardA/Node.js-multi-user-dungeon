@@ -1,7 +1,7 @@
 {
 	"name": "Node.js-multi-user-dungeon",
 	"description": "A MUD with a backend in Node.js",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"author": {
 		"name": "Anders Ramsgaard",
 		"email": "RamsgaardA@gmail.com"
@@ -11,8 +11,9 @@
 		"url": "https://github.com/RamsgaardA/Node.js-multi-user-dungeon.git"
 	},
 	"dependencies": {
-		"express": "4.2.0",
-		"socket.io": "0.9.16"
+		"express": "latest",
+		"socket.io": "latest",
+		"redis" :  "latest"
 	},
 
 	"license": "GPLv3",
