@@ -216,6 +216,9 @@ Game.erase = function(object) {
     if (object.type == "Player") {
         Game.Players.splice(Game.getPlayerIndexSafely(object.owner, Game.Players), 1);
     }
+    if (object.type == "Creature"){
+    	Game.Creatures.splice(Game.findObjectIndex(object.id, Game.Objects), 1);
+    }
 
 };
 
