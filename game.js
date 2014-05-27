@@ -237,8 +237,9 @@ Game.getNearbyPlayers = function(player) {
 					var objects = Game.getAllObjectsOnXY(ix, iy, level.objects);
 					for (var i = 0; i < objects.length; i++) {
 						if (objects[i].type == "Player") {
+							console.log("Player exists");
 							if (objects[i].owner != player.owner) {
-								pout += objects[i];
+								pout.push(objects[i]);
 							}
 						}
 					}
@@ -247,7 +248,7 @@ Game.getNearbyPlayers = function(player) {
 		}
 	}
 	if(pout.length > 0){
-	return pout;
+		return pout;
 	}
 	return false;
 };
