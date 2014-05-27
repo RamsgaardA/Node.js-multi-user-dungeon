@@ -14,7 +14,7 @@ app.get("/", function(req, res) {
 	res.render("index.html");
 });
 
-var client = redis.createClient()
+var client = redis.createClient();
 var port = 3700;
 var io = sio.listen(app.listen(port), {
 	log : false
@@ -78,7 +78,6 @@ io.sockets.on('connection', function(socket) {
 		if (Game.getNearbyPlayers(Game.checkPlayer(Game.Players, id))) {
 			var playersToUpdate = Game.getNearbyPlayers(Game.checkPlayer(Game.Players, id));
 			for (var ix = 0; ix < playersToUpdate.length; ix++) {
-				
 				client.get(playersToUpdate[ix].owner, function(err, socketId) {
 					if (err) {
 						throw err;
