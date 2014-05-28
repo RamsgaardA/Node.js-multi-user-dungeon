@@ -79,7 +79,9 @@ io.sockets.on('connection', function(socket) {
         if (Game.getNearbyPlayers(Game.checkPlayer(Game.Players, id))) {
             var playersToUpdate = Game.getNearbyPlayers(Game.checkPlayer(Game.Players, id));
             for (var ix = 0; ix < playersToUpdate.length; ix++) {
-                io.sockets.socket(getClient(playersToUpdate[ix].owner)).emit('update');
+                io.sockets.socket(getClient(playersToUpdate[ix].owner)).emit('snap', {
+                    snapshot : Game.makeSnap(playersToUpdate[ix].owner)
+                });
             }
         }
         socket.emit('snap', {
