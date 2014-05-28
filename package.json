@@ -13,7 +13,6 @@
 	"dependencies": {
 		"express": "latest",
 		"socket.io": "latest",
-		"redis" :  "latest"
 	},
 
 	"license": "GPLv3",
