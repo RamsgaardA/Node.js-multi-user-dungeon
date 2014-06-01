@@ -12,7 +12,7 @@
 	},
 	"dependencies": {
 		"express": "latest",
-		"socket.io": "latest"
+		"socket.io": "0.9.17"
 	},
 
 	"license": "GPLv3",
