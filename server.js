@@ -141,8 +141,8 @@ io.sockets.on('connection', function(socket) {
                 });
             }
         }
-        if (data.key == 83)
-            save();
+        //if (data.key == 83)
+        //    save();
         socket.emit('snap', {
             snapshot : Game.makeSnap(id)
         });
