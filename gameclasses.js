@@ -1,5 +1,5 @@
 Game = {};
-Game.Tiles = {};
+Game.Tiles = [];
 Game.Items = {};
 Game.CreatureTemplates = {};
 Game.Objects = [];
@@ -8,7 +8,7 @@ Game.Players = [];
 Game.Maps = [];
 Game.Creatures = [];
 
-Game.objectID = function(){
+Game.objectID = function() {
     var idstr = String.fromCharCode(Math.floor((Math.random() * 25) + 65));
     do {
         var ascicode = Math.floor((Math.random() * 42) + 48);
@@ -19,8 +19,6 @@ Game.objectID = function(){
     return (idstr);
 };
 
-
-
 Game.Level = function(name, map, difficulty) {
     this.name = name;
     this.difficulty = difficulty;
@@ -29,7 +27,8 @@ Game.Level = function(name, map, difficulty) {
     Game.Levels.push(this);
 };
 
-Game.Tile = function(isWalkable, symbol, color) {
+Game.Tile = function(index, isWalkable, symbol, color) {
+    this.index = index;
     this.isWalkable = isWalkable;
     this.symbol = symbol;
     this.color = color;
@@ -62,7 +61,7 @@ Game.Armor = function(name, weight, layer, def) {
     this.name = name;
     this.def = def;
     this.layer = layer;
-
+    this.weight = weight;
 };
 
 Game.Stairs = function(symbol, color, leadsto, x, y, level) {
@@ -116,6 +115,40 @@ Game.HostileCreature = function(symbol, name, color, stats, x, y, level) {
     };
     Game.Objects.push(this);
     Game.Creatures.push(this);
+};
+
+Game.itemContainer = function(symbol, color, contents, x, y, level) {
+    this.id = Game.objectID();
+    this.type = "ItemContainer";
+    this.symbol = symbol;
+    this.color = color;
+    this.isWalkable = true;
+    this.contents = contents;
+    this.func = function(actor) {
+        if (this.contents.weapon[0]) {
+            if (this.contents.weapon[0].atk > actor.contents.weapon[0].atk) {
+                actor.contents.weapon = this.contents.weapon;
+                actor.appendMessage("Upgraded to a " + actor.contents.weapon[0].name);
+            }
+        }
+        if (this.contents.armor[0]) {
+            for (var i = 0; i < this.contents.armor.length; i++) {
+                if (actor.contents.armor[i]) {
+                    if (this.contents.armor[i].def > actor.contents.armor[i].def) {
+                        actor.contents.armor[i] = this.contents.armor[i];
+                        actor.appendMessage("Upgraded to a " + actor.contents.armor[i].name);
+                    }
+                } else {
+                    actor.contents.armor[i] = this.contents.armor[i];
+                    actor.appendMessage("Put on a " + actor.contents.armor[i].name);
+                }
+            }
+        }
+    };
+    this.x = x;
+    this.y = y;
+    this.level = level;
+    Game.Objects.push(this);
 };
 
 Game.Player = function(color, owner, contents, x, y, level) {

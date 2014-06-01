@@ -139,12 +139,14 @@ Game.makeDungeon = function(size) {
         for (var y = 0; y < map.length; y++) {
             newmap.push([]);
             for (var x = 0; x < map[y].length; x++) {
-                if (map[y][x] == 1) {
-                    newmap[y].push(0);
-                } else if (map[y][x] == 0) {
+                if(map[y][x] == 0){
+                    newmap[y].push(2);
+                }
+                else if (map[y][x] == 2){
+                    newmap[y].push(4);
+                }
+                else if (map[y][x] == 5) {
                     newmap[y].push(1);
-                } else if (map[y][x] == 5) {
-                    newmap[y].push(0);
                 } else {
                     newmap[y].push(map[y][x]);
                 }
