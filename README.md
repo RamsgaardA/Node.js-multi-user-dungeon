@@ -23,3 +23,11 @@ Setting up the server
 * shut down the server, go to public/main.js and change the line var socket = io.connect('http://localhost:3700'); to var socket = io.connect('[your IP]:3700');
 * Start the server again
 * Done
+
+Visualizing levels
+----------
+* Install Python 2.7.6
+* Install Pillow and jsonpickle
+* Save the game (this is done calling save() in server.js)
+* run visualize.py
+* In /visualize there should now be an image of each level
