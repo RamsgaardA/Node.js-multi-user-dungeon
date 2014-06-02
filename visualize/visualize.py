@@ -26,7 +26,7 @@ for a in myLevels:
     img = Image.open("canvas.png")
     draw = ImageDraw.Draw(img)
     # font = ImageFont.truetype(<font-file>, <font-size>)
-    font = ImageFont.truetype("font.ttf", 20)
+    font = ImageFont.truetype("font.TTF", 20)
     # draw.text((x, y),"Sample Text",(r,g,b))
     y = 0
     for i in textLevels[a['name']]:
